@@ -65,7 +65,7 @@ const elements = {
 
     return newElement;
   },
-  createMany: function(elementsArray, nodeMap=undefined) {
+  createMany: function(elementsList, nodeMap=undefined) {
     /**
     
     nodeMap is an optional array of objects that illustrates the DOM hierarchy of the elements you're creating. The object keys correspond to the parent element. The object values correspond to the children that should be appended to that parent. If included, createMany builds the hierarchy in the map.
@@ -99,7 +99,7 @@ const elements = {
     
     **/
     const elementsArray = [];
-    elementsArray.forEach(function(element) {
+    elementsList.forEach(function(element) {
       elementsArray.push(elements.create(element));
     });
 
