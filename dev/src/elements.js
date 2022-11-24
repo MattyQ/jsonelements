@@ -7,7 +7,8 @@ const elements = {
       "type": string, // type must be an HTML tag that is valid for document.createElement
       "id": string, // optional id for element
       "classes": array, // optional array of strings, must be valid for Element.classList.add
-      "attributes": object, // optional object that contains attributes and corresponding values, must be valid strings for  Element.setAttribute,
+      "styles": object, // optional object that contains styles and corresponding values, keys must be valid properties for CSSStyleDeclaration object (e.g., backgroundColor instead of background-color).
+      "attributes": object, // optional object that contains attributes and corresponding values, must be valid strings for Element.setAttribute.
       "eventListeners": array, // optional array of objects. Objects should have one property, which corresponds to the event type for the listener. The value should be the function to call
       "textContent": string, // optional string that is added as a text node to the element
       "childArray": array, // optional array of element arrays. Lets you build a nested HTML structure.
@@ -27,6 +28,12 @@ const elements = {
       element.classes.forEach(function(thisClass) {
         newElement.classList.add(thisClass);
       });
+    }
+
+    if (element.styles) {
+      for (const style in element.styles) {
+        newElement.style[style] = element.styles[style];
+      }
     }
 
     if (element.attributes) {

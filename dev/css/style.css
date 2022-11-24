@@ -1,8 +1,5 @@
 html, body {
   height: 100%;
   width: 100%;
-}
-
-#object-model {
-  list-style-type: none;
+  overflow: hidden;
 }
