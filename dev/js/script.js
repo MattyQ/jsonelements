@@ -49,6 +49,266 @@ const helloWorld = {
   "childNodes": array, // optional array of element nodes to append as children
   "parentNode": element node // optional element to use as a parent for this element
 }`
+    },
+    {
+      'type': 'table',
+      'childArray': [
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'th',
+              'textContent': 'Property'
+            },
+            {
+              'type': 'th',
+              'textContent': 'Description'
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code>type</code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Required <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': '<code>type</code> must be an HTML tag that is valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">document.createElement()</a>.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code>id</code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code>classes</code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>array</code> of <code>strings</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': '<code>string</code> values must be valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList"><code>Element.classList.add()<code></a>.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'type': 'tr',
+          'childArray': [
+            {
+              'type': 'td',
+              'innerHTML': '<code></code>'
+            },
+            {
+              'type': 'td',
+              'childArray': [
+                {
+                  'type': 'p',
+                  'innerHTML': 'Optional <code>string</code>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

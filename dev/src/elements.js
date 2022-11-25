@@ -4,8 +4,8 @@ const elements = {
     
     Element:
     {
-      "type": string, // type must be an HTML tag that is valid for document.createElement
-      "id": string, // optional id for element
+      "type": string,
+      "id": string,
       "classes": array, // optional array of strings, must be valid for Element.classList.add
       "styles": object, // optional object that contains styles and corresponding values, keys must be valid properties for CSSStyleDeclaration object (e.g., backgroundColor instead of background-color).
       "attributes": object, // optional object that contains attributes and corresponding values, must be valid strings for Element.setAttribute.
