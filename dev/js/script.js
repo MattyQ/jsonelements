@@ -126,7 +126,7 @@ const helloWorld = {
                 },
                 {
                   'type': 'p',
-                  'innerHTML': '<code>string</code> values must be valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList"><code>Element.classList.add()<code></a>.'
+                  'innerHTML': '<code>string</code> values must be valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">Element.classList.add()</a>.'
                 }
               ]
             }
@@ -137,18 +137,18 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>styles</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>object</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'Contains key-value pairs that correspond to styles and values. Keys must be valid properties for the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration">CSSStyleDeclaration</a> interface (for example, <code>backgroundColor</code> instead of <code>background-color</code>).'
                 }
               ]
             }
@@ -159,18 +159,18 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>attributes</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>object</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'Contains key-value pairs that correspond to attributes and values. Keys must be valid attributes for the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute">Element.setAttribute()</a>.'
                 }
               ]
             }
