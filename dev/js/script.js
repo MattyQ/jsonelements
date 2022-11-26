@@ -181,18 +181,18 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>eventListeners</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>array</code> of <code>objects</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': '<code>objects</code> in this array must contain one key-value pair. The key must be the event to listen for (for example, <code>click</code>). The value must be a function for the listener to trigger.'
                 }
               ]
             }
@@ -203,7 +203,7 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>textContent</code>'
             },
             {
               'type': 'td',
@@ -214,7 +214,7 @@ const helloWorld = {
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'Sets the plaintext content of the element. The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the changes to the inner HTML are applied.'
                 }
               ]
             }
@@ -225,7 +225,7 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>innerHTML</code>'
             },
             {
               'type': 'td',
@@ -236,7 +236,7 @@ const helloWorld = {
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'Must be a valid HTML string for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a>.'
                 }
               ]
             }
@@ -247,18 +247,22 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>childArray</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>array</code> of <code>objects</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': '<code>objects</code> in this array must follow the elements.js object schema. This property can be used to build nested HTML elements, such as lists with list items or tables with rows.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'This page is a functional example of using <code>childArray</code> to construct nested HTML elements.'
                 }
               ]
             }
