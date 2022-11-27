@@ -214,7 +214,11 @@ const helloWorld = {
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the plaintext content of the element. The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the changes to the inner HTML are applied.'
+                  'textContent': 'Sets the plaintext content of the element.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the changes to the inner HTML are applied.'
                 }
               ]
             }
@@ -237,6 +241,10 @@ const helloWorld = {
                 {
                   'type': 'p',
                   'innerHTML': 'Must be a valid HTML string for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a>.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the changes to the inner HTML are applied.'
                 }
               ]
             }
@@ -258,7 +266,11 @@ const helloWorld = {
                 },
                 {
                   'type': 'p',
-                  'innerHTML': '<code>objects</code> in this array must follow the elements.js object schema. This property can be used to build nested HTML elements, such as lists with list items or tables with rows.'
+                  'innerHTML': '<code>objects</code> in this array must follow the elements.js object schema. This property can be used to build nested HTML elements, such as lists with list items or tables with rows and cells.'
+                },
+                {
+                  'type': 'p',
+                  'innerHTML': 'Generally, <code>childArray</code> and <code>childNodes</code> should be considered mutually exclusive. If both properties are used, elements in <code>childArray</code> are appended to the new element first, and then elements in <code>childNodes</code>. If you want to specify a mix of nodes and element arrays, use <code>childNodes</code>.'
                 },
                 {
                   'type': 'p',
@@ -273,18 +285,30 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>childNodes</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>array</code> of <code>nodes</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'Items in this array must be HTML element nodes. Because the <code>element.create()</code> method returns a node, you can also use this property to specify a mix of existing nodes and elements.js arrays. For example:'
+                },
+                {
+                  'type': 'pre',
+                  'textContent': `const exampleElement = {
+  "type": "p",
+  "childNodes": [
+    document.getElementById("example-id"),
+    document.getElementsByClass("example-class")[0],
+    elements.create({"type": "p", "id": "example-child-element"})
+  ]
+}
+                  `
                 }
               ]
             }
@@ -295,18 +319,18 @@ const helloWorld = {
           'childArray': [
             {
               'type': 'td',
-              'innerHTML': '<code></code>'
+              'innerHTML': '<code>parentNode</code>'
             },
             {
               'type': 'td',
               'childArray': [
                 {
                   'type': 'p',
-                  'innerHTML': 'Optional <code>string</code>.'
+                  'innerHTML': 'Optional <code>node</code>.'
                 },
                 {
                   'type': 'p',
-                  'innerHTML': 'Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp"><code>id</code></a> attribute of the element.'
+                  'innerHTML': 'An HTML element node to use as the parent for the new element.'
                 }
               ]
             }
