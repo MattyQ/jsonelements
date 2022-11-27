@@ -1,4 +1,4 @@
-const elements = { 
+const elementsJS = { 
   create: function(element) {
     /**
     
@@ -61,7 +61,7 @@ const elements = {
 
     if (element.childArray) {
       element.childArray.forEach(function(child) {
-        newElement.appendChild(elements.create(child));
+        newElement.appendChild(elementsJS.create(child));
       });
     }
 
@@ -112,7 +112,7 @@ const elements = {
     **/
     const elementsArray = [];
     elementsList.forEach(function(element) {
-      elementsArray.push(elements.create(element));
+      elementsArray.push(elementsJS.create(element));
     });
 
     if (nodeMap) {

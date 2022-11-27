@@ -24,7 +24,7 @@ const helloWorld = {
     },
     {
       'type': 'p',
-      'innerHTML': 'This page is written as a JSON object and then rendered by calling <code>elements.create</code>.'
+      'innerHTML': 'This page is written as a JSON object and then rendered by calling <code>elementsJS.create()</code>.'
     },
     {
       'type': 'h2',
@@ -305,7 +305,7 @@ const helloWorld = {
   "childNodes": [
     document.getElementById("example-id"),
     document.getElementsByClass("example-class")[0],
-    elements.create({"type": "p", "id": "example-child-element"})
+    elementsJS.create({"type": "p", "id": "example-child-element"})
   ]
 }
                   `
@@ -341,4 +341,4 @@ const helloWorld = {
   ]
 }
 
-elements.create(helloWorld);
+elementsJS.create(helloWorld);
