@@ -1,24 +1,5 @@
 const elementsJS = { 
   create: function(element) {
-    /**
-    
-    Element:
-    {
-      "type": string,
-      "id": string,
-      "classes": array, // optional array of strings, must be valid for Element.classList.add
-      "styles": object, // optional object that contains styles and corresponding values, keys must be valid properties for CSSStyleDeclaration object (e.g., backgroundColor instead of background-color).
-      "attributes": object, // optional object that contains attributes and corresponding values, must be valid strings for Element.setAttribute.
-      "eventListeners": array, // optional array of objects. Objects should have one property, which corresponds to the event type for the listener. The value should be the function to call
-      "textContent": string, // optional string that is added as a text node to the element
-      "innerHTML": string, // optional string of valid HTML for element.innerHTML
-      "childArray": array, // optional array of element arrays. Lets you build a nested HTML structure.
-      "childNodes": array, // optional array of element nodes to append as children
-      "parentNode": element node // optional element to use as a parent for this element
-    }
-    
-    **/
-    
     const newElement = document.createElement(element.type);
 
     if (element.id) {
