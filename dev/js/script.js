@@ -240,11 +240,11 @@ const helloWorld = {
                 },
                 {
                   "type": "p",
-                  "innerHTML": `Must be a valid HTML string for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a>.`
+                  "innerHTML": `Must be a valid HTML string for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML">Element.setHTML()</a>.`
                 },
                 {
                   "type": "p",
-                  "innerHTML": "The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the changes to the inner HTML are applied."
+                  "innerHTML": "The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the HTML is set."
                 }
               ]
             }
@@ -304,7 +304,7 @@ const helloWorld = {
   "type": "p",
   "childNodes": [
     document.getElementById("example-id"),
-    document.getElementsByClass("example-class")[0],
+    document.getElementsByClassName("example-class")[0],
     elementsJS.create({"type": "p", "id": "example-child-element"})
   ]
 }
@@ -341,4 +341,5 @@ const helloWorld = {
   ]
 }
 
-elementsJS.create(helloWorld);
+// elementsJS.create(helloWorld);
+const helloWorldEl = new JSONElement(helloWorld);
