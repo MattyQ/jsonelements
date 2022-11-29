@@ -341,5 +341,4 @@ const helloWorld = {
   ]
 }
 
-// elementsJS.create(helloWorld);
-const helloWorldEl = new JSONElement(helloWorld);
+ElementsJS.create(helloWorld);
