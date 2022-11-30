@@ -24,7 +24,15 @@ const helloWorld = {
     },
     {
       "type": "p",
-      "innerHTML": "This page is written as a JSON object and then rendered by calling <code>elementsJS.create()</code>."
+      "innerHTML": "This page is written as a JSON object and then rendered by calling <code>ElementsJS.create()</code>."
+    },
+    {
+      "type": "h2",
+      "textContent": "What is Elements.js?"
+    },
+    {
+      "type": "p",
+      "textContent": "Elements.js is a lightweight JavaScript library that implements the ability to construct complex HTML documents using JSON."
     },
     {
       "type": "h2",

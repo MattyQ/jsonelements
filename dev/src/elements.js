@@ -103,6 +103,10 @@ class ElementsJS {
     return elementsArray;
   }
 
+  static getJSONtemplate(element) {
+    return element[this.key];
+  }
+
   static isJSONElement(element) {
     if (element[this.key]) {
       return true;
