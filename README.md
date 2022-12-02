@@ -18,4 +18,4 @@ elements.create(helloWorld);
 
 The JSON is rendered into the following HTML.
 
-![A website with one paragraph element that contains the text Hello, World!](/docs/images/helloWorldExample.png)
+![A website with one paragraph element that contains the text Hello, World!](helloWorldExample.png)
