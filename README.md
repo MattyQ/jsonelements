@@ -8,12 +8,12 @@ For example, the content of a basic website can be initialized with the followin
 
 ```
 const helloWorld = {
-  'type': 'p',
-  'textContent': 'Hello, world!',
-  'parentNode': document.body
+  "type": "p",
+  "textContent": "Hello, world!",
+  "parentNode": document.body
 }
 
-elements.create(helloWorld);
+ElementsJS.create(helloWorld);
 ```
 
 The JSON is rendered into the following HTML.
