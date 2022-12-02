@@ -1,17 +1,26 @@
+const styles = {
+  "type": "style",
+  "textContent": `
+    div#hello-world {
+      position: fixed;
+      height: 90vh;
+      width: 90vw;
+      top: 5vh;
+      left: 5vw;
+      border: 1px solid black;
+      box-sizing: border-box;
+      padding: 10px;
+      overflow: auto;
+    }
+  `,
+  "parentNode": document.head
+}
+
+ElementsJS.create(styles);
+
 const helloWorld = {
   "type": "div",
   "id": "hello-world",
-  "styles": {
-    "position": "fixed",
-    "height": "90vh",
-    "width": "90vw",
-    "top": "5vh",
-    "left": "5vw",
-    "border": "1px solid black",
-    "boxSizing": "border-box",
-    "padding": "10px",
-    "overflow": "auto"
-  },
   "parentNode": document.body,
   "childArray": [
     {
