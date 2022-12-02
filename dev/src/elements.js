@@ -7,65 +7,93 @@ class JSONElement {
 class ElementsJS {
   static #SYMBOL = Symbol("ElementsJS");
 
-  static #newElement(element) {
-    const newElement = document.createElement(element.type);
-    newElement[this.key] = element;
+  static #setElementId(element, id) {
+    element.setAttribute('id', id);
+  }
 
-    if (element.id) {
-      newElement.setAttribute('id', element.id);
+  static #setElementClasses(element, classes) {
+    classes.forEach(function(thisClass) {
+      element.classList.add(thisClass);
+    });
+  }
+
+  static #setElementStyles(element, styles) {
+    for (const style in styles) {
+      element.style[style] = styles[style];
     }
+  }
 
-    if (element.classes) {
-      element.classes.forEach(function(thisClass) {
-        newElement.classList.add(thisClass);
-      });
+  static #setElementAttributes(element, attributes) {
+    for (const attribute in attributes) {
+      element.setAttribute(attribute, attributes[attribute]);
     }
+  }
 
-    if (element.styles) {
-      for (const style in element.styles) {
-        newElement.style[style] = element.styles[style];
+  static #setElementTextContent(element, textContent) {
+    element.appendChild(document.createTextNode(textContent));
+  }
+
+  static #setElementInnerHTML(element, innerHTML) {
+    element.setHTML(innerHTML);
+  }
+
+  static #setElementEventListeners(element, eventListeners) {
+    eventListeners.forEach(function(listener) {
+      for (const event in listener) {
+        element.addEventListener(event, listener[event]);
       }
+    });
+  }
+
+  static #newElement(template) {
+    const element = document.createElement(template.type);
+    element[this.key] = template;
+
+    if (template.id) {
+      this.#setElementId(element, template.id);
     }
 
-    if (element.attributes) {
-      for (const attribute in element.attributes) {
-        newElement.setAttribute(attribute, element.attributes[attribute]);
-      }
+    if (template.classes) {
+      this.#setElementClasses(element, template.classes);
     }
 
-    if (element.textContent) {
-      newElement.appendChild(document.createTextNode(element.textContent));
+    if (template.styles) {
+      this.#setElementStyles(element, template.styles);
     }
 
-    if (element.innerHTML) {
-      newElement.setHTML(element.innerHTML);
+    if (template.attributes) {
+      this.#setElementAttributes(element, template.attributes);
     }
 
-    if (element.eventListeners) {
-      element.eventListeners.forEach(function(listener) {
-        for (const event in listener) {
-          newElement.addEventListener(event, listener[event]);
-        }
+    if (template.textContent) {
+      this.#setElementTextContent(element, template.textContent);
+    }
+
+    if (template.innerHTML) {
+      this.#setElementInnerHTML(element, template.innerHTML);
+    }
+
+    if (template.eventListeners) {
+      this.#setElementEventListeners(element, template.eventListeners);
+    }
+
+    if (template.childArray) {
+      template.childArray.forEach(function(child) {
+        element.appendChild(new JSONElement(child));
       });
     }
 
-    if (element.childArray) {
-      element.childArray.forEach(function(child) {
-        newElement.appendChild(new JSONElement(child));
+    if (template.childNodes) {
+      template.childNodes.forEach(function(child) {
+        element.appendChild(child);
       });
     }
 
-    if (element.childNodes) {
-      element.childNodes.forEach(function(child) {
-        newElement.appendChild(child);
-      });
+    if (template.parentNode) {
+      template.parentNode.appendChild(element);
     }
 
-    if (element.parentNode) {
-      element.parentNode.appendChild(newElement);
-    }
-
-    return newElement;
+    return element;
   }
 
   constructor() {
