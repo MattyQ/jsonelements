@@ -45,6 +45,22 @@ class ElementsJS {
     });
   }
 
+  static #setElementChildArray(element, childArray) {
+    childArray.forEach(function(child) {
+      element.appendChild(new JSONElement(child));
+    });
+  }
+
+  static #setElementChildNodes(element, childNodes) {
+    childNodes.forEach(function(child) {
+      element.appendChild(child);
+    });
+  }
+
+  static #setElementParentNode(element, parentNode) {
+    parentNode.appendChild(element);
+  }
+
   static #newElement(template) {
     const element = document.createElement(template.type);
     element[this.key] = template;
@@ -78,22 +94,52 @@ class ElementsJS {
     }
 
     if (template.childArray) {
-      template.childArray.forEach(function(child) {
-        element.appendChild(new JSONElement(child));
-      });
+      this.#setElementChildArray(element, template.childArray);
     }
 
     if (template.childNodes) {
-      template.childNodes.forEach(function(child) {
-        element.appendChild(child);
-      });
+      this.#setElementChildNodes(element, template.childNodes);
     }
 
     if (template.parentNode) {
-      template.parentNode.appendChild(element);
+      this.#setElementParentNode(element, template.parentNode);
     }
 
     return element;
+  }
+
+  static #buildElementsArray(elements) {
+    const elementsArray = [];
+
+    elements.forEach(function(element) {
+      elementsArray.push(new JSONElement(element));
+    });
+
+    return elementsArray;
+  }
+
+  static #applyNodeMap(elementsArray, nodeMap) {
+    nodeMap.forEach(function(map) {
+      for (const parent in map) {
+        map[parent].forEach(function(child) {
+          elementsArray[parent].appendChild(elementsArray[child]);
+        });
+      }
+    });
+  }
+
+  static #newElements(elements, nodeMap=undefined) {
+    const elementsArray = this.#buildElementsArray(elements);
+    
+    if (nodeMap) {
+      this.#applyNodeMap(elementsArray, nodeMap);
+    }
+    
+    return elementsArray;
+  }
+
+  static #getSymbol() {
+    return this.#SYMBOL;
   }
 
   constructor() {
@@ -101,11 +147,7 @@ class ElementsJS {
   }
 
   static get key() {
-    return this.getSymbol();
-  }
-
-  static getSymbol() {
-    return this.#SYMBOL;
+    return this.#getSymbol();
   }
 
   static create(element) {
@@ -113,22 +155,7 @@ class ElementsJS {
   }
 
   static createMany(elements, nodeMap=undefined) {
-    const elementsArray = [];
-    elements.forEach(function(element) {
-      elementsArray.push(new JSONElement(element));
-    });
-
-    if (nodeMap) {
-      nodeMap.forEach(function(map) {
-        for (const parent in map) {
-          map[parent].forEach(function(child) {
-            elementsArray[parent].appendChild(elementsArray[child]);
-          });
-        }
-      });
-    }
-    
-    return elementsArray;
+    return this.#newElements(elements, nodeMap);
   }
 
   static getJSONtemplate(element) {
@@ -143,36 +170,3 @@ class ElementsJS {
     return false;
   }
 }
-
-/**
-
-nodeMap is an optional array of objects that illustrates the DOM hierarchy of the elements you're creating. The object keys correspond to the parent element. The object values correspond to the children that should be appended to that parent. If included, createMany builds the hierarchy in the map.
-
-Given an element array like:
-[
-  {"type": "p"}, // 0
-  {"type": "p"}, // 1
-  {"type": "div"}, // 2
-  {"type": "form"}, // 3
-  {"type": "input"} // 4
-]
-
-The example nodeMap:
-  - Appends the first two `p` items to the `div`  
-  - Appends the `input` to the `form`
-  - Appends the `form` to the `div`
-  
-The nodeMap looks like this:
-[
-  {2: [0, 1]},
-  {3: [4]},
-  {2: [3]}
-]
-
-Or like this, if preferred:
-[
-  {2: [0, 1], 3: [4]},
-  {2: [3]}
-]
-
-**/
