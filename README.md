@@ -11,20 +11,28 @@ The only thing that distinguishes an HTML element created with the library from 
 Basic content for an HTML document can be initialized with the following code:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.js"></script>
+<html>
 
-const helloWorld = {
-  "type": "p",
-  "textContent": "Hello, world!",
-  "parentNode": document.body
-}
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.js"></script>
+  </head>
 
-ElementsJS.create(helloWorld);
+  <body>
+    <script>
+      const helloWorld = {
+        "type": "p",
+        "textContent": "Hello, world!",
+        "parentNode": document.body
+      }
+
+      ElementsJS.create(helloWorld);
+    </script>
+  </body>
+
+</html>
 ```
 
-When `ElementsJS.create()` is called, the JSON template is rendered into HTML. In this example, because `document.body` is supplied for the `parentNode` property, the new element is directly appended to the body of the HTML document. The following image shows the result of the example code.
-
-![A website with one paragraph element that contains the text Hello, World!](helloWorldExample.png)
+When `ElementsJS.create()` is called, the JSON template is rendered into HTML. In this example, because `document.body` is supplied for the `parentNode` property, the new element is directly appended to the body of the HTML document.
 
 ## Usage
 
