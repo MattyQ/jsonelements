@@ -143,7 +143,7 @@ class ElementsJS {
   }
 
   constructor() {
-    throw new Error("The ElementsJS class cannot be instanced.");
+    throw new Error("The ElementsJS class cannot be instantiated.");
   }
 
   static get key() {
