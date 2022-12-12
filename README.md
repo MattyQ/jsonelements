@@ -104,7 +104,7 @@ The `ElementsJS.getJSONTemplate(element)` method takes an element and returns th
 
 #### ElementsJS.isJSONElement(element)
 
-The `ElementsJS.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has the ElementJS key.
+The `ElementsJS.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has a property with a key that corresponds to `ElementsJS.key`.
 
 ### JSONElement class
 
