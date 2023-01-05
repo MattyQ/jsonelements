@@ -2,6 +2,54 @@ class JSONElement {
   constructor(element) {
     return ElementsJS.create(element);
   }
+
+  static a(innerHTML, src, target, template=undefined) {
+
+  }
+
+  static div(template=undefined) {
+    
+  }
+
+  static h1(innerHTML, template=undefined) {
+
+  }
+
+  static h2(innerHTML, template=undefined) {
+
+  }
+
+  static h3(innerHTML, template=undefined) {
+
+  }
+
+  static h4(innerHTML, template=undefined) {
+
+  }
+
+  static h5(innerHTML, template=undefined) {
+
+  }
+
+  static h6(innerHTML, template=undefined) {
+
+  }
+
+  static img(altText, src, template=undefined) {
+    
+  }
+
+  static ol(items, template=undefined) {
+
+  }
+
+  static p(innerHTML, template=undefined) {
+
+  }
+
+  static ul(items, template=undefined) {
+
+  }
 }
 
 class ElementsJS {
