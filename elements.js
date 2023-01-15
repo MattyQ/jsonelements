@@ -1,54 +1,193 @@
 class JSONElement {
   constructor(element) {
+    if (ElementsJS.isJSONElement(element)) {
+      return ElementsJS.create(ElementsJS.getJSONtemplate(element));
+    } else if (typeof element === "object") {
+      return ElementsJS.create(element);
+    } else {
+      throw new Error("JSONElement requires either an object that follows the JSONElement schema or an element created with ElementsJS.")
+    }
+  }
+
+  static a(template=undefined, src=undefined, innerHTML=undefined, target=undefined) {
+    const defaultTemplate = {"type": "a"};
+
+    if (src) {
+      defaultTemplate.attributes.src = src;
+    }
+
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    if (target) {
+      defaultTemplate.attributes.target = target;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
     return ElementsJS.create(element);
   }
 
-  static a(innerHTML, src, target, template=undefined) {
-
-  }
-
   static div(template=undefined) {
+    const defaultTemplate = {"type": "div"};
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static h1(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h1"};
+
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static h2(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h2"};
     
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
   }
 
-  static h1(innerHTML, template=undefined) {
-
-  }
-
-  static h2(innerHTML, template=undefined) {
-
-  }
-
-  static h3(innerHTML, template=undefined) {
-
-  }
-
-  static h4(innerHTML, template=undefined) {
-
-  }
-
-  static h5(innerHTML, template=undefined) {
-
-  }
-
-  static h6(innerHTML, template=undefined) {
-
-  }
-
-  static img(altText, src, template=undefined) {
+  static h3(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h3"};
     
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
   }
 
-  static ol(items, template=undefined) {
+  static h4(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h4"};
+    
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
 
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
   }
 
-  static p(innerHTML, template=undefined) {
+  static h5(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h5"};
+    
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
 
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static h6(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "h6"};
+    
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static img(template=undefined, src=undefined, alt=undefined) {
+    const defaultTemplate = {"type": "img"};
+    
+    if (src) {
+      defaultTemplate.attributes.src = src;
+    }
+
+    if (alt) {
+      defaultTemplate.attributes.alt = alt;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static ol(template=undefined, items=undefined) {
+    const defaultTemplate = {"type": "ol"};
+    
+    if (items) {
+      defaultTemplate.childArray = [];
+
+      for (const item in items) {
+        const thisItem = {
+          "type": "li",
+          "innerHTML": item
+        }
+
+        defaultTemplate.childArray.push(thisItem);
+      }
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static p(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "p"};
+    
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
+  }
+
+  static pre(template=undefined, innerHTML=undefined) {
+    const defaultTemplate = {"type": "pre"};
+    
+    if (innerHTML) {
+      defaultTemplate.innerHTML = innerHTML;
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
   }
 
   static ul(items, template=undefined) {
+    const defaultTemplate = {"type": "ul"};
+    
+    if (items) {
+      defaultTemplate.childArray = [];
 
+      for (const item in items) {
+        const thisItem = {
+          "type": "li",
+          "innerHTML": item
+        }
+
+        defaultTemplate.childArray.push(thisItem);
+      }
+    }
+
+    const element = ElementsJS.merge(template, defaultTemplate);
+
+    return ElementsJS.create(element);
   }
 }
 
@@ -190,6 +329,20 @@ class ElementsJS {
     return this.#SYMBOL;
   }
 
+  static #mergeTemplates(originalTemplate, modifiedTemplate) {
+    var updatedTemplate = {};
+    
+    if (typeof originalTemplate === "object") {
+      updatedTemplate = structuredClone(originalTemplate);
+    }
+
+    for (const [property, value] of Object.entries(modifiedTemplate)) {
+      updatedTemplate[property] = structuredClone(value);
+    }
+
+    return updatedTemplate;
+  }
+
   constructor() {
     throw new Error("The ElementsJS class cannot be instantiated.");
   }
@@ -206,7 +359,16 @@ class ElementsJS {
     return this.#newElements(elements, nodeMap);
   }
 
+  static merge(template1, template2) {
+    return this.#mergeTemplates(template1, template2);
+  }
+
   static getJSONtemplate(element) {
+    return element[this.key];
+  }
+
+  static updateJSONtemplate(element, template) {
+    element[this.key] = this.#mergeTemplates(this.getJSONtemplate(element), template);
     return element[this.key];
   }
 
