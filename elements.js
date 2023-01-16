@@ -5,23 +5,29 @@ class JSONElement {
     } else if (typeof element === "object") {
       return ElementsJS.create(element);
     } else {
-      throw new Error("JSONElement requires either an object that follows the JSONElement schema or an element created with ElementsJS.")
+      throw new Error("JSONElement requires either an object that follows the JSONElement schema or an element created with the elements.js library.")
     }
   }
 
   static a(template=undefined, src=undefined, innerHTML=undefined, target=undefined) {
     const defaultTemplate = {"type": "a"};
 
-    if (src) {
-      defaultTemplate.attributes.src = src;
+    if (innerHTML) {
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
-    if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+    const attributes = {};
+
+    if (src) {
+      attributes["src"] = encodeURI(src);
     }
 
     if (target) {
-      defaultTemplate.attributes.target = target;
+      attributes["target"] = target;
+    }
+
+    if (Object.keys(attributes).length) {
+      defaultTemplate["attributes"] = ElementsJS.merge(template.attributes, attributes);
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -31,6 +37,7 @@ class JSONElement {
 
   static div(template=undefined) {
     const defaultTemplate = {"type": "div"};
+
     const element = ElementsJS.merge(template, defaultTemplate);
 
     return ElementsJS.create(element);
@@ -40,7 +47,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h1"};
 
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -52,7 +59,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h2"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -64,7 +71,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h3"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -76,7 +83,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h4"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -88,7 +95,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h5"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -100,7 +107,7 @@ class JSONElement {
     const defaultTemplate = {"type": "h6"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -111,12 +118,18 @@ class JSONElement {
   static img(template=undefined, src=undefined, alt=undefined) {
     const defaultTemplate = {"type": "img"};
     
+    const attributes = {};
+
     if (src) {
-      defaultTemplate.attributes.src = src;
+      attributes["src"] = encodeURI(src);
     }
 
     if (alt) {
-      defaultTemplate.attributes.alt = alt;
+      attributes["alt"] = alt;
+    }
+
+    if (Object.keys(attributes).length) {
+      defaultTemplate["attributes"] = ElementsJS.merge(template["attributes"], attributes);
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -128,7 +141,7 @@ class JSONElement {
     const defaultTemplate = {"type": "ol"};
     
     if (items) {
-      defaultTemplate.childArray = [];
+      defaultTemplate["childArray"] = [];
 
       for (const item in items) {
         const thisItem = {
@@ -136,7 +149,7 @@ class JSONElement {
           "innerHTML": item
         }
 
-        defaultTemplate.childArray.push(thisItem);
+        defaultTemplate["childArray"].push(thisItem);
       }
     }
 
@@ -149,7 +162,7 @@ class JSONElement {
     const defaultTemplate = {"type": "p"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -161,7 +174,7 @@ class JSONElement {
     const defaultTemplate = {"type": "pre"};
     
     if (innerHTML) {
-      defaultTemplate.innerHTML = innerHTML;
+      defaultTemplate["innerHTML"] = innerHTML;
     }
 
     const element = ElementsJS.merge(template, defaultTemplate);
@@ -173,7 +186,7 @@ class JSONElement {
     const defaultTemplate = {"type": "ul"};
     
     if (items) {
-      defaultTemplate.childArray = [];
+      defaultTemplate["childArray"] = [];
 
       for (const item in items) {
         const thisItem = {
@@ -181,7 +194,7 @@ class JSONElement {
           "innerHTML": item
         }
 
-        defaultTemplate.childArray.push(thisItem);
+        defaultTemplate["childArray"].push(thisItem);
       }
     }
 
