@@ -1,11 +1,13 @@
+"use strict";
+
 class JSONElement {
   constructor(element) {
     if (ElementsJS.isJSONElement(element)) {
       return ElementsJS.create(ElementsJS.getJSONtemplate(element));
-    } else if (typeof element === "object") {
+    } else if (typeof element === "object" || typeof element === "string") {
       return ElementsJS.create(element);
     } else {
-      throw new Error("JSONElement requires either an object that follows the JSONElement schema or an element created with the elements.js library.")
+      throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
     }
   }
 
@@ -262,6 +264,10 @@ class ElementsJS {
   }
 
   static #newElement(template) {
+    if (typeof template === "string") {
+      template = {"type": template};
+    }
+
     const element = document.createElement(template.type);
     element[this.key] = template;
 
@@ -392,4 +398,36 @@ class ElementsJS {
 
     return false;
   }
+
+  static text(string) {
+    return document.createTextNode(string);
+  }
+}
+
+const _e = function() {
+  const elementsArray = [...arguments];
+  const stringsArray = structuredClone(elementsArray.shift());
+
+  stringsArray.splice(0, 1);
+  const template = elementsArray.shift();
+
+  let element = undefined;
+
+  if (template instanceof Element) {
+    element = template;
+  } else if (typeof template === "object" || typeof template === "string") {
+    element = new JSONElement(template);
+  } else {
+    throw new Error("_e requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element.");
+  }
+
+  for (let i = stringsArray.length; i > 0; i--) {
+    element.appendChild(ElementsJS.text(stringsArray.shift()));
+
+    if (elementsArray.length > 0) {
+      element.appendChild(elementsArray.shift());
+    }
+  }
+
+  return element;
 }
