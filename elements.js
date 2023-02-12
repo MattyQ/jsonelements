@@ -362,6 +362,34 @@ class ElementsJS {
     return updatedTemplate;
   }
 
+  static #parseTemplateString(templateStringArray) {
+    const elementsArray = templateStringArray;
+    const stringsArray = structuredClone(elementsArray.shift());
+
+    stringsArray.splice(0, 1);
+    const template = elementsArray.shift();
+
+    let element = undefined;
+
+    if (template instanceof Element) {
+      element = template;
+    } else if (typeof template === "object" || typeof template === "string") {
+      element = new JSONElement(template);
+    } else {
+      throw new Error("_e requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element.");
+    }
+
+    for (let i = stringsArray.length; i > 0; i--) {
+      element.appendChild(ElementsJS.text(stringsArray.shift()));
+
+      if (elementsArray.length > 0) {
+        element.appendChild(elementsArray.shift());
+      }
+    }
+
+    return element;
+  }
+
   constructor() {
     throw new Error("The ElementsJS class cannot be instantiated.");
   }
@@ -402,32 +430,16 @@ class ElementsJS {
   static text(string) {
     return document.createTextNode(string);
   }
+
+  static parse(templateStringArray) {
+    if (arguments.length > 1) {
+      return this.#parseTemplateString([...arguments])
+    }
+    
+    return this.#parseTemplateString(templateStringArray);
+  }
 }
 
 const _e = function() {
-  const elementsArray = [...arguments];
-  const stringsArray = structuredClone(elementsArray.shift());
-
-  stringsArray.splice(0, 1);
-  const template = elementsArray.shift();
-
-  let element = undefined;
-
-  if (template instanceof Element) {
-    element = template;
-  } else if (typeof template === "object" || typeof template === "string") {
-    element = new JSONElement(template);
-  } else {
-    throw new Error("_e requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element.");
-  }
-
-  for (let i = stringsArray.length; i > 0; i--) {
-    element.appendChild(ElementsJS.text(stringsArray.shift()));
-
-    if (elementsArray.length > 0) {
-      element.appendChild(elementsArray.shift());
-    }
-  }
-
-  return element;
+  return ElementsJS.parse([...arguments]);
 }
