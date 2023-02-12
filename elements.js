@@ -390,8 +390,18 @@ class ElementsJS {
     return element;
   }
 
+  static #Shortcuts = class {
+    constructor() {
+      const _e = function() {
+        return ElementsJS.parse([...arguments]);
+      }
+  
+      return _e;
+    }
+  }
+
   constructor() {
-    throw new Error("The ElementsJS class cannot be instantiated.");
+    return new ElementsJS.#Shortcuts;
   }
 
   static get key() {
@@ -440,6 +450,4 @@ class ElementsJS {
   }
 }
 
-const _e = function() {
-  return ElementsJS.parse([...arguments]);
-}
+const _e = new ElementsJS;
