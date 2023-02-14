@@ -1,211 +1,5 @@
 "use strict";
 
-class JSONElement {
-  constructor(element) {
-    if (ElementsJS.isJSONElement(element)) {
-      return ElementsJS.create(ElementsJS.getJSONtemplate(element));
-    } else if (typeof element === "object" || typeof element === "string") {
-      return ElementsJS.create(element);
-    } else {
-      throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
-    }
-  }
-
-  static a(template=undefined, src=undefined, innerHTML=undefined, target=undefined) {
-    const defaultTemplate = {"type": "a"};
-
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const attributes = {};
-
-    if (src) {
-      attributes["src"] = encodeURI(src);
-    }
-
-    if (target) {
-      attributes["target"] = target;
-    }
-
-    if (Object.keys(attributes).length) {
-      defaultTemplate["attributes"] = ElementsJS.merge(template.attributes, attributes);
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static div(template=undefined) {
-    const defaultTemplate = {"type": "div"};
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h1(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h1"};
-
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h2(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h2"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h3(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h3"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h4(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h4"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h5(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h5"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static h6(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "h6"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static img(template=undefined, src=undefined, alt=undefined) {
-    const defaultTemplate = {"type": "img"};
-    
-    const attributes = {};
-
-    if (src) {
-      attributes["src"] = encodeURI(src);
-    }
-
-    if (alt) {
-      attributes["alt"] = alt;
-    }
-
-    if (Object.keys(attributes).length) {
-      defaultTemplate["attributes"] = ElementsJS.merge(template["attributes"], attributes);
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static ol(template=undefined, items=undefined) {
-    const defaultTemplate = {"type": "ol"};
-    
-    if (items) {
-      defaultTemplate["childArray"] = [];
-
-      for (const item in items) {
-        const thisItem = {
-          "type": "li",
-          "innerHTML": item
-        }
-
-        defaultTemplate["childArray"].push(thisItem);
-      }
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static p(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "p"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static pre(template=undefined, innerHTML=undefined) {
-    const defaultTemplate = {"type": "pre"};
-    
-    if (innerHTML) {
-      defaultTemplate["innerHTML"] = innerHTML;
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-
-  static ul(items, template=undefined) {
-    const defaultTemplate = {"type": "ul"};
-    
-    if (items) {
-      defaultTemplate["childArray"] = [];
-
-      for (const item in items) {
-        const thisItem = {
-          "type": "li",
-          "innerHTML": item
-        }
-
-        defaultTemplate["childArray"].push(thisItem);
-      }
-    }
-
-    const element = ElementsJS.merge(template, defaultTemplate);
-
-    return ElementsJS.create(element);
-  }
-}
-
 class ElementsJS {
   static #SYMBOL = Symbol("ElementsJS");
 
@@ -344,10 +138,6 @@ class ElementsJS {
     return elementsArray;
   }
 
-  static #getSymbol() {
-    return this.#SYMBOL;
-  }
-
   static #mergeTemplates(originalTemplate, modifiedTemplate) {
     var updatedTemplate = {};
     
@@ -362,21 +152,25 @@ class ElementsJS {
     return updatedTemplate;
   }
 
-  static #parseTemplateString(templateStringArray) {
+  static #parseTemplateString(templateStringArray, elementOverride=undefined) {
     const elementsArray = templateStringArray;
     const stringsArray = structuredClone(elementsArray.shift());
 
-    stringsArray.splice(0, 1);
-    const template = elementsArray.shift();
-
     let element = undefined;
 
-    if (template instanceof Element) {
-      element = template;
-    } else if (typeof template === "object" || typeof template === "string") {
-      element = new JSONElement(template);
+    if (elementOverride) {
+      element = new JSONElement(elementOverride);
     } else {
-      throw new Error("_e requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element.");
+      stringsArray.splice(0, 1);
+      const template = elementsArray.shift();
+  
+      if (template instanceof Element) {
+        element = template;
+      } else if (typeof template === "object" || typeof template === "string") {
+        element = new JSONElement(template);
+      } else {
+        throw new Error("_e requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element.");
+      }
     }
 
     for (let i = stringsArray.length; i > 0; i--) {
@@ -391,21 +185,29 @@ class ElementsJS {
   }
 
   static #Shortcuts = class {
-    constructor() {
+    constructor(templates=undefined) {
       const _e = function() {
-        return ElementsJS.parse([...arguments]);
+        return ElementsJS.#parseTemplateString([...arguments]);
       }
-  
+
+      if (templates) {
+        for (const [name, template] of Object.entries(templates)) {
+          _e[name] = function() {
+            return ElementsJS.#parseTemplateString([...arguments], template);
+          }
+        }
+      }
+      
       return _e;
     }
   }
 
-  constructor() {
-    return new ElementsJS.#Shortcuts;
+  constructor(templates=undefined) {
+    return new ElementsJS.#Shortcuts(templates);
   }
 
   static get key() {
-    return this.#getSymbol();
+    return ElementsJS.#SYMBOL;
   }
 
   static create(element) {
@@ -450,4 +252,18 @@ class ElementsJS {
   }
 }
 
-const _e = new ElementsJS;
+class JSONElement {
+  constructor(element) {
+    if (ElementsJS.isJSONElement(element)) {
+      return ElementsJS.create(ElementsJS.getJSONtemplate(element));
+    } else if (typeof element === "object" || typeof element === "string") {
+      return ElementsJS.create(element);
+    } else {
+      throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
+    }
+  }
+}
+
+const _e = new ElementsJS({
+  "p": {"type": "p"},
+});
