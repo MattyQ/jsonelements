@@ -3,10 +3,6 @@
 class ElementsJS {
   static #SYMBOL = Symbol("ElementsJS");
 
-  static #setElementId(element, id) {
-    element.setAttribute('id', id);
-  }
-
   static #setElementClasses(element, classes) {
     classes.forEach(function(thisClass) {
       element.classList.add(thisClass);
@@ -66,12 +62,15 @@ class ElementsJS {
       template = {"element": template};
     }
 
-    const element = document.createElement(template["element"]);
-    element[this["key"]] = template;
-
-    if (template["id"]) {
-      this.#setElementId(element, template["id"]);
+    let element = undefined;
+    
+    if (template["element"] instanceof Element) {
+      element = template["element"];
+    } else {
+      element = document.createElement(template["element"]);
     }
+    
+    element[this["key"]] = template;
 
     if (template["classes"]) {
       this.#setElementClasses(element, template["classes"]);
@@ -1033,11 +1032,13 @@ class ElementsJS {
       }
     }
 
-    for (let i = stringsArray.length; i > 0; i--) {
-      element.appendChild(ElementsJS.text(stringsArray.shift()));
-
-      if (elementsArray.length > 0) {
-        element.appendChild(elementsArray.shift());
+    if (stringsArray) {
+      for (let i = stringsArray.length; i > 0; i--) {
+        element.appendChild(ElementsJS.text(stringsArray.shift()));
+  
+        if (elementsArray.length > 0) {
+          element.appendChild(elementsArray.shift());
+        }
       }
     }
 
@@ -1052,13 +1053,55 @@ class ElementsJS {
 
       if (templates) {
         for (const [name, template] of Object.entries(templates)) {
-          _e[name] = function() {
-            return ElementsJS.#parseTemplateString([...arguments], template);
+          if (template["void"]) {
+            _e[name] = new JSONElement(template);
+          } else {
+            _e[name] = function() {
+              return ElementsJS.#parseTemplateString([...arguments], template);
+            }
           }
+          
+          _e[name][ElementsJS.key] = template;
         }
+
+        _e[ElementsJS.key] = templates;
       }
       
       return _e;
+    }
+  }
+
+  static #Links = class {
+    constructor(links) {
+      const defaultTemplate = {"element": "a"};
+      const linkTemplates = {};
+
+      for (const [name, template] of Object.entries(links)) {
+        if (typeof template === "string") {
+          linkTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, {"href": template});
+        } else if (typeof template === "object") {
+          linkTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, template);
+        }
+      }
+
+      return new ElementsJS(linkTemplates);
+    }
+  }
+
+  static #Images = class {
+    constructor(images) {
+      const defaultTemplate = {"element": "img"};
+      const imageTemplates = {};
+
+      for (const [name, template] of Object.entries(images)) {
+        if (typeof template === "string") {
+          imageTemplates[name] = new JSONElement(ElementsJS.#mergeTemplates(defaultTemplate, {"src": template}));
+        } else if (typeof template === "object") {
+          imageTemplates[name] = new JSONElement(ElementsJS.#mergeTemplates(defaultTemplate, template));
+        }
+      }
+
+      return imageTemplates;
     }
   }
 
@@ -1110,13 +1153,21 @@ class ElementsJS {
     
     return this.#parseTemplateString(templateStringArray);
   }
+
+  static links(links) {
+    return new ElementsJS.#Links(links);
+  }
+
+  static images(images) {
+    return new ElementsJS.#Images(images);
+  }
 }
 
 class JSONElement {
   constructor(element) {
     if (ElementsJS.isJSONElement(element)) {
       return ElementsJS.create(ElementsJS.getJSONtemplate(element));
-    } else if (typeof element === "object" || typeof element === "string") {
+    } else if (element instanceof Element || typeof element === "object" || typeof element === "string") {
       return ElementsJS.create(element);
     } else {
       throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
@@ -1128,23 +1179,23 @@ const _e = new ElementsJS({
   "a": {"element": "a"},
   "abbr": {"element": "abbr"},
   "address": {"element": "address"},
-  "area": {"element": "area"},
+  "area": {"element": "area", "void": true},
   "article": {"element": "article"},
   "aside": {"element": "aside"},
   "audio": {"element": "audio"},
   "b": {"element": "b"},
-  "base": {"element": "base"},
+  "base": {"element": "base", "void": true},
   "bdi": {"element": "bdi"},
   "bdo": {"element": "bdo"},
   "blockquote": {"element": "blockquote"},
   "body": {"element": "body"},
-  "br": {"element": "br"},
+  "br": {"element": "br", "void": true},
   "button": {"element": "button"},
   "canvas": {"element": "canvas"},
   "caption": {"element": "caption"},
   "cite": {"element": "cite"},
   "code": {"element": "code"},
-  "col": {"element": "col"},
+  "col": {"element": "col", "void": true},
   "colgroup": {"element": "colgroup"},
   "data": {"element": "data"},
   "datalist": {"element": "datalist"},
@@ -1157,7 +1208,7 @@ const _e = new ElementsJS({
   "dl": {"element": "dl"},
   "dt": {"element": "dt"},
   "em": {"element": "em"},
-  "embed": {"element": "embed"},
+  "embed": {"element": "embed", "void": true},
   "fieldset": {"element": "fieldset"},
   "figcaption": {"element": "figcaption"},
   "figure": {"element": "figure"},
@@ -1171,22 +1222,22 @@ const _e = new ElementsJS({
   "h6": {"element": "h6"},
   "head": {"element": "head"},
   "header": {"element": "header"},
-  "hr": {"element": "hr"},
+  "hr": {"element": "hr", "void": true},
   "html": {"element": "html"},
   "i": {"element": "i"},
   "iframe": {"element": "iframe"},
-  "img": {"element": "img"},
-  "input": {"element": "input"},
+  "img": {"element": "img", "void": true},
+  "input": {"element": "input", "void": true},
   "ins": {"element": "ins"},
   "kbd": {"element": "kbd"},
   "label": {"element": "label"},
   "legend": {"element": "legend"},
   "li": {"element": "li"},
-  "link": {"element": "link"},
+  "link": {"element": "link", "void": true},
   "main": {"element": "main"},
   "map": {"element": "map"},
   "mark": {"element": "mark"},
-  "meta": {"element": "meta"},
+  "meta": {"element": "meta", "void": true},
   "meter": {"element": "meter"},
   "nav": {"element": "nav"},
   "noscript": {"element": "noscript"},
@@ -1210,7 +1261,7 @@ const _e = new ElementsJS({
   "section": {"element": "section"},
   "select": {"element": "select"},
   "small": {"element": "small"},
-  "source": {"element": "source"},
+  "source": {"element": "source", "void": true},
   "span": {"element": "span"},
   "strong": {"element": "strong"},
   "style": {"element": "style"},
@@ -1228,10 +1279,10 @@ const _e = new ElementsJS({
   "time": {"element": "time"},
   "title": {"element": "title"},
   "tr": {"element": "tr"},
-  "track": {"element": "track"},
+  "track": {"element": "track", "void": true},
   "u": {"element": "u"},
   "ul": {"element": "ul"},
   "var": {"element": "var"},
   "video": {"element": "video"},
-  "wbr": {"element": "wbr"}
+  "wbr": {"element": "wbr", "void": true}
 });
