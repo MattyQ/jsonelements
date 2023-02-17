@@ -1090,18 +1090,19 @@ class ElementsJS {
 
   static #Images = class {
     constructor(images) {
-      const defaultTemplate = {"element": "img"};
+      const defaultTemplate = {"element": "img", "void": true};
+      
       const imageTemplates = {};
 
       for (const [name, template] of Object.entries(images)) {
         if (typeof template === "string") {
-          imageTemplates[name] = new JSONElement(ElementsJS.#mergeTemplates(defaultTemplate, {"src": template}));
+          imageTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, {"src": template});
         } else if (typeof template === "object") {
-          imageTemplates[name] = new JSONElement(ElementsJS.#mergeTemplates(defaultTemplate, template));
+          imageTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, template);
         }
       }
-
-      return imageTemplates;
+      
+      return new ElementsJS(imageTemplates);
     }
   }
 
