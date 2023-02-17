@@ -20,7 +20,7 @@ Basic content for an HTML document can be initialized with the following code:
   <body>
     <script>
       const helloWorld = {
-        "type": "p",
+        "element": "p",
         "textContent": "Hello, world!",
         "parentNode": document.body
       }
@@ -114,7 +114,7 @@ Example:
 
 ```
 const helloWorld = {
-  "type": "p",
+  "element": "p",
   "textContent": "Hello, world!"
 }
 
@@ -131,7 +131,7 @@ The following properties are supported. Properties can be specified in any order
 
 ```
 {
-  "type": string,
+  "element": string,
   "id": string,
   "classes": array,
   "styles": object,
@@ -154,12 +154,12 @@ The following table describes the properties.
   </tr>
   <tr>
     <td>
-      <code>type</code>
+      <code>element</code>
     </td>
     <td>
       <p>Required <code>string</code>. </p>
       <p>
-        <code>type</code> must be an HTML tag that is valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">document.createElement()</a>.
+        <code>element</code> must be an HTML tag that is valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">document.createElement()</a>.
       </p>
     </td>
   </tr>
@@ -254,11 +254,11 @@ The following table describes the properties.
       <p>Optional <code>array</code> of <code>elements</code>. </p>
       <p>Items in this array must be HTML elements. Because the <code>ElementsJS.create()</code> method returns an element, you can also use this property to specify a mix of existing nodes and elements.js arrays. For example: </p>
       <pre>const exampleElement = {
-  "type": "p",
+  "element": "p",
   "childNodes": [
     document.getElementById("example-id"),
     document.getElementsByClassName("example-class")[0],
-    ElementsJS.create({"type": "p", "id": "example-child-element"})
+    ElementsJS.create({"element": "p", "id": "example-child-element"})
   ]
 }
                   </pre>
