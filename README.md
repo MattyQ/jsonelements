@@ -1,10 +1,10 @@
-# Elements.js
+# JSONElements
 
-Elements.js is a native JavaScript library that uses JSON to create HTML elements. Normally, constructing HTML elements in native JavaScript requires a number of successive calls in order to apply attributes, styles, classes, event listeners, and more. With elements.js, you can use a JavaScript object in place of the function calls usually needed to build, style, and render an element.
+JSONElements is a native JavaScript library that uses JSON to create HTML elements. Normally, constructing HTML elements in native JavaScript requires a number of successive calls in order to apply attributes, styles, classes, event listeners, and more. With JSONElements, you can use a JavaScript object in place of the function calls usually needed to build, style, and render an element.
 
-The library can be used to create an individual element, a tree of elements, or a complex collection of elements, all based on JSON templates. You can create HTML elements by calling the ElementsJS interface (an abstract class) or by instantiating new JSONElements. In both cases, you describe the desired elements using JSON templates that conform to the JSONElement schema.
+The library can be used to create an individual element, a tree of elements, or a complex collection of elements, all based on JSON templates. You can create HTML elements by calling the JSONElements interface (an abstract class) or by instantiating new JSONElements. In both cases, you describe the desired elements using JSON templates that conform to the JSONElement schema.
 
-The only thing that distinguishes an HTML element created with the library from an element created with `document.createElement()` is the presence of a property that stores the JSON template. To avoid potential collision with other libraries, the property is keyed with a Symbol that is registered when the elements.js library is loaded.
+The only thing that distinguishes an HTML element created with the library from an element created with `document.createElement()` is the presence of a property that stores the JSON template. To avoid potential collision with other libraries, the property is keyed with a Symbol that is registered when the JSONElements library is loaded.
 
 ## Hello, world!
 
@@ -14,7 +14,7 @@ Basic content for an HTML document can be initialized with the following code:
 <html>
 
   <head>
-    <script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelementsjs@v0.2.0-pre-release/jsonelements.js"></script>
   </head>
 
   <body>
@@ -25,29 +25,29 @@ Basic content for an HTML document can be initialized with the following code:
         "parentNode": document.body
       }
 
-      ElementsJS.create(helloWorld);
+      JSONElements.create(helloWorld);
     </script>
   </body>
 
 </html>
 ```
 
-When `ElementsJS.create()` is called, the JSON template is rendered into HTML. In this example, because `document.body` is supplied for the `parentNode` property, the new element is directly appended to the body of the HTML document.
+When `JSONElements.create()` is called, the JSON template is rendered into HTML. In this example, because `document.body` is supplied for the `parentNode` property, the new element is directly appended to the body of the HTML document.
 
 ## Usage
 
-To load the elements.js library, I recommend you use the jsDelivr CDN.
+To load the JSONElements library, I recommend you use the jsDelivr CDN.
 
 For the normal, unminified version:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
 ```
 
 For the minified version:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.min.js"></script>
 ```
 
 The script link can be placed in the head or body of your HTML document.
@@ -61,54 +61,54 @@ Example:
 </head>
 ```
 
-## Elements.js classes
+## JSONElements classes
 
-The elements.js library provides the following classes:
+The JSONElements library provides the following classes:
 
-- `ElementsJS`
+- `JSONElements`
 - `JSONElement`
 
-### ElementsJS class
+### JSONElements class
 
-`ElementsJS` is an abstract class that provides the bulk of the library functionality. The `ElementsJS` class is intended to be used as an interface and cannot be instantiated.
+`JSONElements` is an abstract class that provides the bulk of the library functionality. The `JSONElements` class is intended to be used as an interface and cannot be instantiated.
 
-The `ElementsJS` class has the following property:
+The `JSONElements` class has the following property:
 
-- `key`: A Symbol that is registered when `ElementsJS` is loaded. When you create an element with the elements.js library, this Symbol is used as a key for the element property that stores the JSON template.
+- `key`: A Symbol that is registered when `JSONElements` is loaded. When you create an element with the JSONElements library, this Symbol is used as a key for the element property that stores the JSON template.
 
-The `ElementsJS` class has the following methods:
+The `JSONElements` class has the following methods:
 
-- `ElementsJS.create(template)`
-- `ElementsJS.createMany(templatesArray, nodeMap)`
-- `ElementsJS.getJSONTemplate(element)`
-- `ElementsJS.isJSONElement(element)`
+- `JSONElements.create(template)`
+- `JSONElements.createMany(templatesArray, nodeMap)`
+- `JSONElements.getJSONTemplate(element)`
+- `JSONElements.isJSONElement(element)`
 
-#### ElementsJS.create(template)
+#### JSONElements.create(template)
 
-The `ElementsJS.create(template)` method takes a JSON template as a parameter and returns an HTML element. The JSON template is an object with at least one property, `type`, and must conform to the JSONElement schema.
+The `JSONElements.create(template)` method takes a JSON template as a parameter and returns an HTML element. The JSON template is an object with at least one property, `type`, and must conform to the JSONElement schema.
 
 If a valid element is provided for the `parentNode` property of the JSON template, the new element is immediately appended to the parent. The new element is returned by the method regardless of whether `parentNode` is used.
 
-#### ElementsJS.createMany(templatesArray, nodeMap)
+#### JSONElements.createMany(templatesArray, nodeMap)
 
-The `ElementsJS.createMany(templatesArray, nodeMap)` method has the following parameters:
+The `JSONElements.createMany(templatesArray, nodeMap)` method has the following parameters:
 
 - `templatesArray` is a required array of one or more JSON templates that conform to the JSONElement schema.
 - `nodeMap` is an optional array of objects. Each object represents a parent-child relationship between two or more of the elements provided in `templatesArray`.
 
 The method returns an array of elements in the order that they were provided in `templatesArray`.
 
-#### ElementsJS.getJSONTemplate(element)
+#### JSONElements.getJSONTemplate(element)
 
-The `ElementsJS.getJSONTemplate(element)` method takes an element and returns the original JSON template object that was used to create the element.
+The `JSONElements.getJSONTemplate(element)` method takes an element and returns the original JSON template object that was used to create the element.
 
-#### ElementsJS.isJSONElement(element)
+#### JSONElements.isJSONElement(element)
 
-The `ElementsJS.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has the ElementJS key.
+The `JSONElements.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has the ElementJS key.
 
 ### JSONElement class
 
-`JSONElement` is a class that can be used to create an HTML element or tree of elements. Unlike the `ElementsJS` class, you can use the `new` operator with `JSONElement`. The class takes a JSON template that conforms to the JSONElement schema.
+`JSONElement` is a class that can be used to create an HTML element or tree of elements. Unlike the `JSONElements` class, you can use the `new` operator with `JSONElement`. The class takes a JSON template that conforms to the JSONElement schema.
 
 Example:
 
@@ -121,11 +121,11 @@ const helloWorld = {
 const element = new JSONElement(helloWorld);
 ```
 
-When you create a new `JSONElement`, the template you provide is passed to `ElementsJS.create()`, which returns the computed HTML element.
+When you create a new `JSONElement`, the template you provide is passed to `JSONElements.create()`, which returns the computed HTML element.
 
 ## JSONElement schema
 
-The JSONElement schema defines the format of the JSON template objects expected by the elements.js library.
+The JSONElement schema defines the format of the JSON template objects expected by the JSONElements library.
 
 The following properties are supported. Properties can be specified in any order. The only required property is `type`.
 
@@ -252,13 +252,13 @@ The following table describes the properties.
     </td>
     <td>
       <p>Optional <code>array</code> of <code>elements</code>. </p>
-      <p>Items in this array must be HTML elements. Because the <code>ElementsJS.create()</code> method returns an element, you can also use this property to specify a mix of existing nodes and elements.js arrays. For example: </p>
+      <p>Items in this array must be HTML elements. Because the <code>JSONElements.create()</code> method returns an element, you can also use this property to specify a mix of existing nodes and JSONElements arrays. For example: </p>
       <pre>const exampleElement = {
   "element": "p",
   "childNodes": [
     document.getElementById("example-id"),
     document.getElementsByClassName("example-class")[0],
-    ElementsJS.create({"element": "p", "id": "example-child-element"})
+    JSONElements.create({"element": "p", "id": "example-child-element"})
   ]
 }
                   </pre>

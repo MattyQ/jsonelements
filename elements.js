@@ -1,7 +1,7 @@
 "use strict";
 
-class ElementsJS {
-  static #SYMBOL = Symbol("ElementsJS");
+class JSONElements {
+  static #SYMBOL = Symbol("JSONElements");
 
   static #DEFAULT_ELEMENT_TEMPLATES = {
     "a": { "element": "a" },
@@ -1146,7 +1146,7 @@ class ElementsJS {
 
     if (stringsArray) {
       for (let i = stringsArray.length; i > 0; i--) {
-        element.appendChild(ElementsJS.text(stringsArray.shift()));
+        element.appendChild(JSONElements.text(stringsArray.shift()));
 
         if (elementsArray.length > 0) {
           element.appendChild(elementsArray.shift());
@@ -1160,7 +1160,7 @@ class ElementsJS {
   static #Shortcuts = class {
     constructor(templates = undefined) {
       const _e = function () {
-        return ElementsJS.#parseTemplateString([...arguments]);
+        return JSONElements.#parseTemplateString([...arguments]);
       }
 
       if (templates) {
@@ -1169,14 +1169,14 @@ class ElementsJS {
             _e[name] = new JSONElement(template);
           } else {
             _e[name] = function () {
-              return ElementsJS.#parseTemplateString([...arguments], template);
+              return JSONElements.#parseTemplateString([...arguments], template);
             }
           }
 
-          _e[name][ElementsJS.key] = template;
+          _e[name][JSONElements.key] = template;
         }
 
-        _e[ElementsJS.key] = templates;
+        _e[JSONElements.key] = templates;
       }
 
       return _e;
@@ -1190,13 +1190,13 @@ class ElementsJS {
 
       for (const [name, template] of Object.entries(links)) {
         if (typeof template === "string") {
-          linkTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, { "href": template });
+          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "href": template });
         } else if (typeof template === "object") {
-          linkTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, template);
+          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
         }
       }
 
-      return new ElementsJS(linkTemplates);
+      return new JSONElements(linkTemplates);
     }
   }
 
@@ -1208,26 +1208,26 @@ class ElementsJS {
 
       for (const [name, template] of Object.entries(images)) {
         if (typeof template === "string") {
-          imageTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, { "src": template });
+          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "src": template });
         } else if (typeof template === "object") {
-          imageTemplates[name] = ElementsJS.#mergeTemplates(defaultTemplate, template);
+          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
         }
       }
 
-      return new ElementsJS(imageTemplates);
+      return new JSONElements(imageTemplates);
     }
   }
 
   constructor(templates = undefined) {
-    return new ElementsJS.#Shortcuts(templates);
+    return new JSONElements.#Shortcuts(templates);
   }
 
   static get key() {
-    return ElementsJS.#SYMBOL;
+    return JSONElements.#SYMBOL;
   }
 
   static get defaultElements() {
-    return ElementsJS.#DEFAULT_ELEMENT_TEMPLATES;
+    return JSONElements.#DEFAULT_ELEMENT_TEMPLATES;
   }
 
   static create(element) {
@@ -1272,24 +1272,24 @@ class ElementsJS {
   }
 
   static links(links) {
-    return new ElementsJS.#Links(links);
+    return new JSONElements.#Links(links);
   }
 
   static images(images) {
-    return new ElementsJS.#Images(images);
+    return new JSONElements.#Images(images);
   }
 }
 
 class JSONElement {
   constructor(element) {
-    if (ElementsJS.isJSONElement(element)) {
-      return ElementsJS.create(ElementsJS.getJSONtemplate(element));
+    if (JSONElements.isJSONElement(element)) {
+      return JSONElements.create(JSONElements.getJSONtemplate(element));
     } else if (element instanceof Element || typeof element === "object" || typeof element === "string") {
-      return ElementsJS.create(element);
+      return JSONElements.create(element);
     } else {
       throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
     }
   }
 }
 
-const _e = new ElementsJS(ElementsJS.defaultElements);
+const _e = new JSONElements(JSONElements.defaultElements);
