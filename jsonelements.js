@@ -1287,7 +1287,7 @@ class JSONElement {
     } else if (element instanceof Element || typeof element === "object" || typeof element === "string") {
       return JSONElements.create(element);
     } else {
-      throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the elements.js library.")
+      throw new Error("JSONElement requires a valid string for document.createElement(), an object that follows the JSONElement schema, or an element created with the JSONElements library.")
     }
   }
 }
