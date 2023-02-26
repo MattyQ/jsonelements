@@ -14,7 +14,7 @@ Basic content for an HTML document can be initialized with the following code:
 <html>
 
   <head>
-    <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelementsjs@v0.2.0-pre-release/jsonelements.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
   </head>
 
   <body>
@@ -57,7 +57,7 @@ Example:
 ```
 <head>
   ...
-  <script src="https://cdn.jsdelivr.net/gh/mattyq/elementsjs@v0.1.0-pre-release/elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.min.js"></script>
 </head>
 ```
 
