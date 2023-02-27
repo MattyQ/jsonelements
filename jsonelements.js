@@ -1,8 +1,6 @@
 "use strict";
 
 class JSONElements {
-  static #SYMBOL = Symbol("JSONElements");
-
   static #DEFAULT_ELEMENT_TEMPLATES = {
     "a": { "element": "a" },
     "abbr": { "element": "abbr" },
@@ -115,58 +113,101 @@ class JSONElements {
     "wbr": { "element": "wbr", "void": true }
   }
 
-  static #setElementClasses(element, classes) {
-    classes.forEach(function (thisClass) {
-      element.classList.add(thisClass);
-    });
-  }
+  static #SYMBOL = Symbol("JSONElements");
 
-  static #setElementStyles(element, styles) {
-    for (const style in styles) {
-      element.style[style] = styles[style];
+  static #Images = class {
+    constructor(images) {
+      const defaultTemplate = { "element": "img", "void": true };
+
+      const imageTemplates = {};
+
+      for (const [name, template] of Object.entries(images)) {
+        if (typeof template === "string") {
+          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "src": template });
+        } else if (typeof template === "object") {
+          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
+        }
+      }
+
+      return new JSONElements(imageTemplates);
     }
   }
 
-  static #setElementAttribute(element, attribute, value) {
-    element.setAttribute(attribute, value);
-  }
+  static #Links = class {
+    constructor(links) {
+      const defaultTemplate = { "element": "a" };
+      const linkTemplates = {};
 
-  static #setElementAttributes(element, attributes) {
-    for (const attribute in attributes) {
-      element.setAttribute(attribute, attributes[attribute]);
+      for (const [name, template] of Object.entries(links)) {
+        if (typeof template === "string") {
+          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "href": template });
+        } else if (typeof template === "object") {
+          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
+        }
+      }
+
+      return new JSONElements(linkTemplates);
     }
   }
 
-  static #setElementTextContent(element, textContent) {
-    element.appendChild(document.createTextNode(textContent));
+  static #Shortcuts = class {
+    constructor(templates = undefined) {
+      const _e = function () {
+        return JSONElements.#parseTemplateString([...arguments]);
+      }
+
+      if (templates) {
+        for (const [name, template] of Object.entries(templates)) {
+          if (template["void"]) {
+            _e[name] = new JSONElement(template);
+          } else {
+            _e[name] = function () {
+              return JSONElements.#parseTemplateString([...arguments], template);
+            }
+          }
+
+          _e[name][JSONElements.key] = template;
+        }
+
+        _e[JSONElements.key] = templates;
+      }
+
+      return _e;
+    }
   }
 
-  static #setElementInnerHTML(element, innerHTML) {
-    element.setHTML(innerHTML);
-  }
-
-  static #setElementEventListeners(element, eventListeners) {
-    eventListeners.forEach(function (listener) {
-      for (const event in listener) {
-        element.addEventListener(event, listener[event]);
+  static #applyNodeMap(elementsArray, nodeMap) {
+    nodeMap.forEach(function (map) {
+      for (const parent in map) {
+        map[parent].forEach(function (child) {
+          elementsArray[parent].appendChild(elementsArray[child]);
+        });
       }
     });
   }
 
-  static #setElementChildArray(element, childArray) {
-    childArray.forEach(function (child) {
-      element.appendChild(new JSONElement(child));
+  static #buildElementsArray(elements) {
+    const elementsArray = [];
+
+    elements.forEach(function (element) {
+      elementsArray.push(new JSONElement(element));
     });
+
+    return elementsArray;
   }
 
-  static #setElementChildNodes(element, childNodes) {
-    childNodes.forEach(function (child) {
-      element.appendChild(child);
-    });
-  }
+  static #mergeTemplates(originalTemplate, modifiedTemplate) {
+    var updatedTemplate = {};
 
-  static #setElementParentNode(element, parentNode) {
-    parentNode.appendChild(element);
+    if (typeof originalTemplate === "object") {
+      updatedTemplate = structuredClone(originalTemplate);
+    }
+
+    for (const [property, value] of Object.entries(modifiedTemplate)) {
+      updatedTemplate[property] = structuredClone(value);
+    }
+
+    return updatedTemplate;
   }
 
   static #newElement(template) {
@@ -1079,26 +1120,6 @@ class JSONElements {
     return element;
   }
 
-  static #buildElementsArray(elements) {
-    const elementsArray = [];
-
-    elements.forEach(function (element) {
-      elementsArray.push(new JSONElement(element));
-    });
-
-    return elementsArray;
-  }
-
-  static #applyNodeMap(elementsArray, nodeMap) {
-    nodeMap.forEach(function (map) {
-      for (const parent in map) {
-        map[parent].forEach(function (child) {
-          elementsArray[parent].appendChild(elementsArray[child]);
-        });
-      }
-    });
-  }
-
   static #newElements(elements, nodeMap = undefined) {
     const elementsArray = this.#buildElementsArray(elements);
 
@@ -1107,20 +1128,6 @@ class JSONElements {
     }
 
     return elementsArray;
-  }
-
-  static #mergeTemplates(originalTemplate, modifiedTemplate) {
-    var updatedTemplate = {};
-
-    if (typeof originalTemplate === "object") {
-      updatedTemplate = structuredClone(originalTemplate);
-    }
-
-    for (const [property, value] of Object.entries(modifiedTemplate)) {
-      updatedTemplate[property] = structuredClone(value);
-    }
-
-    return updatedTemplate;
   }
 
   static #parseTemplateString(templateStringArray, elementOverride = undefined) {
@@ -1157,77 +1164,70 @@ class JSONElements {
     return element;
   }
 
-  static #Shortcuts = class {
-    constructor(templates = undefined) {
-      const _e = function () {
-        return JSONElements.#parseTemplateString([...arguments]);
-      }
+  static #setElementAttribute(element, attribute, value) {
+    element.setAttribute(attribute, value);
+  }
 
-      if (templates) {
-        for (const [name, template] of Object.entries(templates)) {
-          if (template["void"]) {
-            _e[name] = new JSONElement(template);
-          } else {
-            _e[name] = function () {
-              return JSONElements.#parseTemplateString([...arguments], template);
-            }
-          }
-
-          _e[name][JSONElements.key] = template;
-        }
-
-        _e[JSONElements.key] = templates;
-      }
-
-      return _e;
+  static #setElementAttributes(element, attributes) {
+    for (const attribute in attributes) {
+      element.setAttribute(attribute, attributes[attribute]);
     }
   }
 
-  static #Links = class {
-    constructor(links) {
-      const defaultTemplate = { "element": "a" };
-      const linkTemplates = {};
+  static #setElementChildArray(element, childArray) {
+    childArray.forEach(function (child) {
+      element.appendChild(new JSONElement(child));
+    });
+  }
 
-      for (const [name, template] of Object.entries(links)) {
-        if (typeof template === "string") {
-          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "href": template });
-        } else if (typeof template === "object") {
-          linkTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
-        }
+  static #setElementChildNodes(element, childNodes) {
+    childNodes.forEach(function (child) {
+      element.appendChild(child);
+    });
+  }
+
+  static #setElementClasses(element, classes) {
+    classes.forEach(function (thisClass) {
+      element.classList.add(thisClass);
+    });
+  }
+
+  static #setElementEventListeners(element, eventListeners) {
+    eventListeners.forEach(function (listener) {
+      for (const event in listener) {
+        element.addEventListener(event, listener[event]);
       }
+    });
+  }
 
-      return new JSONElements(linkTemplates);
+  static #setElementInnerHTML(element, innerHTML) {
+    element.setHTML(innerHTML);
+  }
+
+  static #setElementParentNode(element, parentNode) {
+    parentNode.appendChild(element);
+  }
+
+  static #setElementStyles(element, styles) {
+    for (const style in styles) {
+      element.style[style] = styles[style];
     }
   }
 
-  static #Images = class {
-    constructor(images) {
-      const defaultTemplate = { "element": "img", "void": true };
-
-      const imageTemplates = {};
-
-      for (const [name, template] of Object.entries(images)) {
-        if (typeof template === "string") {
-          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, { "src": template });
-        } else if (typeof template === "object") {
-          imageTemplates[name] = JSONElements.#mergeTemplates(defaultTemplate, template);
-        }
-      }
-
-      return new JSONElements(imageTemplates);
-    }
+  static #setElementTextContent(element, textContent) {
+    element.appendChild(document.createTextNode(textContent));
   }
 
   constructor(templates = undefined) {
     return new JSONElements.#Shortcuts(templates);
   }
 
-  static get key() {
-    return JSONElements.#SYMBOL;
-  }
-
   static get defaultElements() {
     return JSONElements.#DEFAULT_ELEMENT_TEMPLATES;
+  }
+
+  static get key() {
+    return JSONElements.#SYMBOL;
   }
 
   static create(element) {
@@ -1238,19 +1238,14 @@ class JSONElements {
     return this.#newElements(elements, nodeMap);
   }
 
-  static merge(template1, template2) {
-    return this.#mergeTemplates(template1, template2);
-  }
-
   static getJSONtemplate(element) {
     return element[this.key];
   }
 
-  static updateJSONtemplate(element, template) {
-    element[this.key] = this.#mergeTemplates(this.getJSONtemplate(element), template);
-    return element[this.key];
+  static images(images) {
+    return new JSONElements.#Images(images);
   }
-
+  
   static isJSONElement(element) {
     if (element[this.key]) {
       return true;
@@ -1259,8 +1254,12 @@ class JSONElements {
     return false;
   }
 
-  static text(string) {
-    return document.createTextNode(string);
+  static links(links) {
+    return new JSONElements.#Links(links);
+  }
+
+  static merge(template1, template2) {
+    return this.#mergeTemplates(template1, template2);
   }
 
   static parse(templateStringArray) {
@@ -1271,12 +1270,13 @@ class JSONElements {
     return this.#parseTemplateString(templateStringArray);
   }
 
-  static links(links) {
-    return new JSONElements.#Links(links);
+  static text(string) {
+    return document.createTextNode(string);
   }
 
-  static images(images) {
-    return new JSONElements.#Images(images);
+  static updateJSONtemplate(element, template) {
+    element[this.key] = this.#mergeTemplates(this.getJSONtemplate(element), template);
+    return element[this.key];
   }
 }
 
