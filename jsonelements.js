@@ -158,8 +158,12 @@ class JSONElements {
 
       if (templates) {
         for (const [name, template] of Object.entries(templates)) {
-          if (template["void"]) {
-            _e[name] = new JSONElement(template);
+          if (template["void"] === true) {
+            Object.defineProperty(_e, name, {
+              get: function() {
+                return new JSONElement(template);
+              }
+            }); 
           } else {
             _e[name] = function () {
               return JSONElements.#parseTemplateString([...arguments], template);
@@ -1109,6 +1113,10 @@ class JSONElements {
       this.#setElementChildArray(element, template["childArray"]);
     }
 
+    if (template["parentSelector"]) {
+      this.#setElementParentSelector(element, template["parentSelector"]);
+    }
+    
     if (template["childNodes"]) {
       this.#setElementChildNodes(element, template["childNodes"]);
     }
@@ -1206,6 +1214,10 @@ class JSONElements {
 
   static #setElementParentNode(element, parentNode) {
     parentNode.appendChild(element);
+  }
+
+  static #setElementParentSelector(element, parentSelector) {
+    document.querySelector(parentSelector).appendChild(element);
   }
 
   static #setElementStyles(element, styles) {
