@@ -125,25 +125,25 @@ When you create a new `JSONElement`, the template you provide is passed to `JSON
 
 ## JSONElement schema
 
-The JSONElement schema defines the format of the JSON template objects expected by the JSONElements library.
+HTML elements for JSONElements are defined in JSON. The following properties are supported.
 
-The following properties are supported. Properties can be specified in any order. The only required property is `type`.
+Properties can be specified in any order. The only required property is `element`.
 
-```
-{
-  "element": string,
-  "id": string,
-  "classes": array,
-  "styles": object,
-  "attributes": object,
-  "eventListeners": array,
-  "textContent": string,
-  "innerHTML": string,
-  "childArray": array,
-  "childNodes": array,
-  "parentNode": element
-}
-```
+<pre>{
+  "<a href="#schema-element">element</a>": <code>string</code>,
+  "<a href="#schema-id">id</a>": <code>string</code>,
+  "<a href="#schema-classes">classes</a>": <code>array</code>,
+  "<a href="#schema-styles">styles</a>": <code>object</code>,
+  "<a href="#schema-attributes">attributes</a>": <code>object</code>,
+  "<a href="#schema-event-listeners">eventListeners</a>": <code>array</code>,
+  "<a href="#schema-text-content">textContent</a>": <code>string</code>,
+  "<a href="#schema-inner-html">innerHTML</a>": <code>string</code>,
+  "<a href="#schema-child-array">childArray</a>": <code>array</code>,
+  "<a href="#schema-child-nodes">childNodes</a>": <code>array</code>,
+  "<a href="#schema-parent-node">parentNode</a>": <code>node</code>,
+  "<a href="#schema-parent-selector">parentSelector</a>": <code>string</code>,
+  "<a href="#schema-attribute">[...attribute]</a>": <code>string</code>
+}</pre>
 
 The following table describes the properties.
 
@@ -153,124 +153,169 @@ The following table describes the properties.
     <th>Description</th>
   </tr>
   <tr>
-    <td>
+    <td id="schema-element">
       <code>element</code>
     </td>
     <td>
-      <p>Required <code>string</code>. </p>
-      <p>
-        <code>element</code> must be an HTML tag that is valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">document.createElement()</a>.
-      </p>
+      <p>Required <code>string</code> or <code>Element</code>.</p>
+      <p><code>element</code> must be an HTML tag that is valid for <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement"
+          target="_blank">document.createElement()</a> or an <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">Element</a>.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-id">
       <code>id</code>
     </td>
     <td>
-      <p>Optional <code>string</code>. </p>
-      <p>Sets the HTML <a target="_blank" href="https://www.w3schools.com/html/html_id.asp">
-          id
-        </a> attribute of the element. </p>
+      <p>Optional <code>string</code>.</p>
+      <p>Sets the HTML <a href="https://www.w3schools.com/html/html_id.asp" target="_blank"><code>id</code></a>
+        attribute of the element.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-classes">
       <code>classes</code>
     </td>
     <td>
-      <p>Optional <code>array</code> of <code>strings</code>. </p>
-      <p>
-        String values must be valid for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">Element.classList.add()</a>.
-      </p>
+      <p>Optional <code>array</code> of <code>strings</code>.</p>
+      <p><code>string</code> values must be valid for <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList"
+          target="_blank">Element.classList.add()</a>.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-styles">
       <code>styles</code>
     </td>
     <td>
-      <p>Optional <code>object</code>. </p>
-      <p>Contains key-value pairs that correspond to styles and values. Keys must be valid properties for the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration">CSSStyleDeclaration</a> interface (for example, <code>backgroundColor</code> instead of <code>background-color</code>). </p>
+      <p>Optional <code>object</code>.</p>
+      <p>Contains key-value pairs that correspond to styles and values, such as
+        <code>{"backgroundColor": "red"}</code>. Keys must be valid properties for the <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration"
+          target="_blank">CSSStyleDeclaration</a> interface (for example, <code>backgroundColor</code> instead
+        of <code>background-color</code>).
+      </p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-attributes">
       <code>attributes</code>
     </td>
     <td>
-      <p>Optional <code>object</code>. </p>
-      <p>Contains key-value pairs that correspond to attributes and values. Keys must be valid attributes for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute">Element.setAttribute()</a>. </p>
+      <p>Optional <code>object</code>.</p>
+      <p>Contains key-value pairs that correspond to attributes and values, such as
+        <code>{"data-example": "example value"}</code>. Keys must be valid attributes for the <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute"
+          target="_blank">Element.setAttribute()</a>.
+      </p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-event-listeners">
       <code>eventListeners</code>
     </td>
     <td>
-      <p>Optional <code>array</code> of <code>objects</code>. </p>
-      <p>
-        Objects in this array must contain one key-value pair. The key must be the event to listen for (for example, <code>click</code>). The value must be a function for the listener to trigger.
-      </p>
+      <p>Optional <code>array</code> of <code>objects</code>.</p>
+      <p><code>objects</code> in this array must contain one key-value pair. The key must be the event to listen
+        for (for example, <code>click</code>). The value must be a function for the listener to trigger.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-text-content">
       <code>textContent</code>
     </td>
     <td>
-      <p>Optional <code>string</code>. </p>
-      <p>Sets the plaintext content of the element.</p>
-      <p>The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the HTML is set. </p>
+      <p>Optional <code>string</code>.</p>
+      <p>The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are
+        provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is
+        overwritten when the HTML is set.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-inner-html">
       <code>innerHTML</code>
     </td>
     <td>
-      <p>Optional <code>string</code>. </p>
-      <p>Must be a valid HTML string for <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML">Element.setHTML()</a>. </p>
-      <p>The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is overwritten when the HTML is set. </p>
+      <p>Optional <code>string</code>.</p>
+      <p>Must be a valid HTML string for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML"
+          target="_blank">Element.setHTML()</a>.</p>
+      <p>The <code>textContent</code> and <code>innerHTML</code> properties are mutually exclusive. If values are
+        provided for both <code>textContent</code> and <code>innerHTML</code>, the plaintext content is
+        overwritten when the HTML is set.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-child-array">
       <code>childArray</code>
     </td>
     <td>
-      <p>Optional <code>array</code> of <code>objects</code>. </p>
-      <p>
-        <code>objects</code> in this array must follow the JSONElement schema. This property can be used to build nested HTML elements, such as lists with list items or tables with rows and cells.
-      </p>
-      <p>Generally, <code>childArray</code> and <code>childNodes</code> should be considered mutually exclusive. If both properties are used, elements in <code>childArray</code> are appended to the new element first, and then elements in <code>childNodes</code>. If you want to specify a mix of nodes and element arrays, use <code>childNodes</code>. </p>
+      <p>Optional <code>array</code> of <code>objects</code>.</p>
+      <p><code>objects</code> in this array must follow the JSONElements object schema. This property can be used
+        to build nested HTML elements, such as lists with list items or tables with rows and cells.</p>
+      <p>Generally, <code>childArray</code> and <code>childNodes</code> should be considered mutually exclusive.
+        If both properties are used, elements in <code>childArray</code> are appended to the new element first,
+        and then elements in <code>childNodes</code>. If you want to specify a mix of nodes and element arrays,
+        use <code>childNodes</code>.</p>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-child-nodes">
       <code>childNodes</code>
     </td>
     <td>
-      <p>Optional <code>array</code> of <code>elements</code>. </p>
-      <p>Items in this array must be HTML elements. Because the <code>JSONElements.create()</code> method returns an element, you can also use this property to specify a mix of existing nodes and JSONElements arrays. For example: </p>
+      <p>Optional <code>array</code> of <code>nodes</code>.</p>
+      <p>Items in this array must be HTML element nodes. Because the <code>element.create()</code> method and
+        <code>_e</code> template syntax return nodes, you can also use this property to specify a mix of
+        existing and new nodes created in a variety of ways. For example:
+      </p>
       <pre>const exampleElement = {
   "element": "p",
   "childNodes": [
     document.getElementById("example-id"),
     document.getElementsByClassName("example-class")[0],
-    JSONElements.create({"element": "p", "id": "example-child-element"})
+    document.createElement("p"),
+    JSONElements.create({"element": "p", "id": "example-child-element"}),
+    _e.p`example child element`    
   ]
-}
-                  </pre>
+}</pre>
     </td>
   </tr>
   <tr>
-    <td>
+    <td id="schema-parent-node">
       <code>parentNode</code>
     </td>
     <td>
-      <p>Optional <code>element</code>. </p>
-      <p>An HTML element to use as the parent for the new element.</p>
+      <p>Optional <code>node</code>.</p>
+      <p>An HTML element node to use as the parent for the new element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td id="schema-parent-selector">
+      <code>parentSelector</code>
+    </td>
+    <td>
+      <p>Optional <code>string</code>.</p>
+      <p>An HTML element node to use as the parent for the new element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td id="schema-attribute">
+      <code>[...attribute]</code>
+    </td>
+    <td>
+      <p>Optional <code>string</code>.</p>
+      <p>In addition to the properties that are enumerated in this table, the JSONElement schema accepts all <a
+          href="https://www.w3schools.com/tags/ref_attributes.asp" target="_blank">HTML attributes</a>,
+        including event handlers and <a
+          href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes" target="_blank">ARIA
+          attributes</a>. For example:</p>
+      <pre>{
+  "element": "a",
+  "href": "https://www.example.com",
+  "target": "_blank"
+}</pre>
     </td>
   </tr>
 </table>
