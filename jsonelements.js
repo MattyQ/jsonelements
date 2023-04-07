@@ -160,10 +160,10 @@ class JSONElements {
         for (const [name, template] of Object.entries(templates)) {
           if (template["void"] === true) {
             Object.defineProperty(_e, name, {
-              get: function() {
+              get: function () {
                 return new JSONElement(template);
               }
-            }); 
+            });
           } else {
             _e[name] = function () {
               return JSONElements.#parseTemplateString([...arguments], template);
@@ -1112,7 +1112,7 @@ class JSONElements {
     if (template["childArray"]) {
       this.#setElementChildArray(element, template["childArray"]);
     }
-    
+
     if (template["childNodes"]) {
       this.#setElementChildNodes(element, template["childNodes"]);
     }
@@ -1257,7 +1257,7 @@ class JSONElements {
   static images(images) {
     return new JSONElements.#Images(images);
   }
-  
+
   static isJSONElement(element) {
     if (element[this.key]) {
       return true;
