@@ -1112,10 +1112,6 @@ class JSONElements {
     if (template["childArray"]) {
       this.#setElementChildArray(element, template["childArray"]);
     }
-
-    if (template["parentSelector"]) {
-      this.#setElementParentSelector(element, template["parentSelector"]);
-    }
     
     if (template["childNodes"]) {
       this.#setElementChildNodes(element, template["childNodes"]);
@@ -1123,6 +1119,10 @@ class JSONElements {
 
     if (template["parentNode"]) {
       this.#setElementParentNode(element, template["parentNode"]);
+    }
+
+    if (template["parentSelector"]) {
+      this.#setElementParentSelector(element, template["parentSelector"]);
     }
 
     return element;
