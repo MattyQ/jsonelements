@@ -4,7 +4,7 @@ JSONElements is a native JavaScript library that uses JSON to create HTML elemen
 
 The library can be used to create an individual element, a tree of elements, or a complex collection of elements, all based on JSON templates. You can create HTML elements by calling the JSONElements interface (an abstract class) or by instantiating new JSONElements. In both cases, you describe the desired elements using JSON templates that conform to the JSONElement schema.
 
-The only thing that distinguishes an HTML element created with the library from an element created with `document.createElement()` is the presence of a property that stores the JSON template. To avoid potential collision with other libraries, the property is keyed with a Symbol that is registered when the JSONElements library is loaded.
+The only thing that distinguishes an HTML element created with the library from an element created with `document.createElement()` is the presence of a property that stores JSONElements values (for now just the JSON template). To avoid potential collision with other libraries, the property is keyed with a Symbol that is registered when the JSONElements library is loaded.
 
 ## Hello, world!
 
@@ -15,18 +15,16 @@ Basic content for an HTML document can be initialized with the following code:
 
   <head>
     <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
+    <script>
+      JSONElements.create({
+        "element": "p",
+        "textContent": "Hello, world!",
+        "parentSelector": "body"
+      });
+    </script>
   </head>
 
   <body>
-    <script>
-      const helloWorld = {
-        "element": "p",
-        "textContent": "Hello, world!",
-        "parentNode": document.body
-      }
-
-      JSONElements.create(helloWorld);
-    </script>
   </body>
 
 </html>
@@ -70,18 +68,26 @@ The JSONElements library provides the following classes:
 
 ### JSONElements class
 
-`JSONElements` is an abstract class that provides the bulk of the library functionality. The `JSONElements` class is intended to be used as an interface and cannot be instantiated.
+`JSONElements` is an abstract class that provides the bulk of the library functionality. The `JSONElements` class is intended to be used as an interface, and can be instantiated to create collections of template elements.
 
-The `JSONElements` class has the following property:
+The `JSONElements` class has the following properties:
+
+- `defaultElements`: An object that contains the templates used to create the default element shortcuts. The list is not exhaustive, but it does include the most common HTML elements.
 
 - `key`: A Symbol that is registered when `JSONElements` is loaded. When you create an element with the JSONElements library, this Symbol is used as a key for the element property that stores the JSON template.
 
 The `JSONElements` class has the following methods:
 
-- `JSONElements.create(template)`
-- `JSONElements.createMany(templatesArray, nodeMap)`
-- `JSONElements.getJSONTemplate(element)`
-- `JSONElements.isJSONElement(element)`
+- `create(template)`
+- `createMany(templatesArray, nodeMap)`
+- `getJSONTemplate(element)`
+- `images(images)`
+- `isJSONElement(element)`
+- `links(links)`
+- `merge(template1, template2)`
+- `parse(templateStringArray)`
+- `text(string)`
+- `updateJSONTemplate(element, template)`
 
 #### JSONElements.create(template)
 
@@ -122,6 +128,152 @@ const element = new JSONElement(helloWorld);
 ```
 
 When you create a new `JSONElement`, the template you provide is passed to `JSONElements.create()`, which returns the computed HTML element.
+
+## JSONElements functions
+
+The JSONElements library provides the following function:
+
+- `_e`
+
+### _e template syntax
+
+The `_e` function is a template literal tag that can be used to create JSON templates. The function takes a string or array of strings as a parameter and returns a JSON template object. With `_e`, you can create JSON templates without having to escape quotes, and nest templates within templates.
+
+For example, the `Hello, world!` example can be refactored using `_e`:
+
+```js
+_e
+  `${{
+    "element": "p",
+    "parentSelector": "body"
+  }}
+  Hello, world!`;
+```
+
+`_e` is initialized with a set of default element shortcuts. The list is not exhaustive, but it does include the most common HTML elements:
+
+- `a`
+- `abbr`
+- `address`
+- `area`
+- `article`
+- `aside`
+- `audio`
+- `b`
+- `base`
+- `bdi`
+- `bdo`
+- `blockquote`
+- `body`
+- `br`
+- `button`
+- `canvas`
+- `caption`
+- `cite`
+- `code`
+- `col`
+- `colgroup`
+- `data`
+- `datalist`
+- `dd`
+- `del`
+- `details`
+- `dfn`
+- `dialog`
+- `div`
+- `dl`
+- `dt`
+- `em`
+- `embed`
+- `fieldset`
+- `figcaption`
+- `figure`
+- `footer`
+- `form`
+- `h1`
+- `h2`
+- `h3`
+- `h4`
+- `h5`
+- `h6`
+- `head`
+- `header`
+- `hr`
+- `html`
+- `i`
+- `iframe`
+- `img`
+- `input`
+- `ins`
+- `kbd`
+- `label`
+- `legend`
+- `li`
+- `link`
+- `main`
+- `map`
+- `mark`
+- `meta`
+- `meter`
+- `nav`
+- `noscript`
+- `object`
+- `ol`
+- `optgroup`
+- `option`
+- `output`
+- `p`
+- `param`
+- `picture`
+- `pre`
+- `progress`
+- `q`
+- `rp`
+- `rt`
+- `ruby`
+- `s`
+- `samp`
+- `script`
+- `section`
+- `select`
+- `small`
+- `source`
+- `span`
+- `strong`
+- `style`
+- `sub`
+- `summary`
+- `sup`
+- `table`
+- `tbody`
+- `td`
+- `template`
+- `textarea`
+- `tfoot`
+- `th`
+- `thead`
+- `time`
+- `title`
+- `tr`
+- `track`
+- `u`
+- `ul`
+- `var`
+- `video`
+- `wbr`
+
+For example, if we wanted to nest the `Hello, world!` paragraph inside another element:
+
+```js
+_e
+  `${{
+    "element": "div",
+    "parentSelector": "body"
+  }}
+  ${_e.p
+    `Hello, world!`
+  }`;
+```
 
 ## JSONElement schema
 
