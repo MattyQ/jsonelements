@@ -6,6 +6,8 @@ The library can be used to create an individual element, a tree of elements, or 
 
 The only thing that distinguishes an HTML element created with the library from an element created with `document.createElement()` is the presence of a property that stores JSONElements values (for now just the JSON template). To avoid potential collision with other libraries, the property is keyed with a Symbol that is registered when the JSONElements library is loaded.
 
+---
+
 ## Hello, world!
 
 Basic content for an HTML document can be initialized with the following code:
@@ -31,6 +33,8 @@ Basic content for an HTML document can be initialized with the following code:
 ```
 
 When `JSONElements.create()` is called, the JSON template is rendered into HTML. In this example, because `document.body` is supplied for the `parentNode` property, the new element is directly appended to the body of the HTML document.
+
+---
 
 ## Usage
 
@@ -58,6 +62,8 @@ Example:
   <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.min.js"></script>
 </head>
 ```
+
+---
 
 ## JSONElements classes
 
@@ -144,6 +150,8 @@ const element = new JSONElement(helloWorld);
 ```
 
 When you create a new `JSONElement`, the template you provide is passed to `JSONElements.create()`, which returns the computed HTML element.
+
+---
 
 ## JSONElements functions
 
@@ -309,6 +317,8 @@ The following example mixes `_e` with the `JSONElements.create()` method, and us
     ]
   });
 ```
+
+---
 
 ## JSONElement schema
 
@@ -515,6 +525,8 @@ The following table describes the properties.
     </td>
   </tr>
 </table>
+
+---
 
 ## Shortcuts
 
