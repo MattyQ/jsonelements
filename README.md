@@ -81,11 +81,11 @@ The `JSONElements` class has the following methods:
 - `create(template)`
 - `createMany(templatesArray, nodeMap)`
 - `getJSONTemplate(element)`
-- `images(images)`
+- `images(images)` (see the Shortcuts section)
 - `isJSONElement(element)`
-- `links(links)`
+- `links(links)` (see the Shortcuts section)
 - `merge(template1, template2)`
-- `parse(templateStringArray)`
+- `parse()`
 - `text(string)`
 - `updateJSONTemplate(element, template)`
 
@@ -111,6 +111,22 @@ The `JSONElements.getJSONTemplate(element)` method takes an element and returns 
 #### JSONElements.isJSONElement(element)
 
 The `JSONElements.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has the ElementJS key.
+
+#### JSONElements.merge(template1, template2)
+
+The `JSONElements.merge(template1, template2)` method takes two JSON templates as parameters and returns a new JSON template that is the result of merging the two templates. The changes in `template2` override the changes in `template1`.
+
+#### JSONElements.parse()
+
+The `JSONElements.parse()` method can be used as a template literal tag to create JSON templates. Use the same syntax as the `_e` function. Generally, you should use `_e` instead of `JSONElements.parse()`.
+
+#### JSONElements.text(string)
+
+The `JSONElements.text(string)` method takes a string and returns a text node.
+
+#### JSONElements.updateJSONTemplate(element, template)
+
+The `JSONElements.updateJSONTemplate(element, template)` method takes an element and a JSON template as parameters and updates the element with the new template. The method returns the updated element. The element must have been created with the JSONElements library.
 
 ### JSONElement class
 
@@ -381,6 +397,12 @@ The following table describes the properties.
           href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute"
           target="_blank">Element.setAttribute()</a>.
       </p>
+      <p>
+        This property is especially useful for specifying custom attributes, such as <code>data-*</code>. Standard HTML attributes can be directly specified as properties for the template. See the <a href="#schema-attribute">[...attribute]</a> for more information.
+      </p>
+      <p>
+        If attributes are specified in both <code>attributes</code> and as properties for the template, the template-level properties override values in <code>attributes</code>.
+      </p>
     </td>
   </tr>
   <tr>
@@ -487,6 +509,9 @@ The following table describes the properties.
   "href": "https://www.example.com",
   "target": "_blank"
 }</pre>
+      <p>
+        If attributes are specified in both the <code>attributes</code> property and as properties for the template, the template-level properties override values in <code>attributes</code>.
+      </p>
     </td>
   </tr>
 </table>
