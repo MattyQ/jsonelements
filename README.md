@@ -515,3 +515,61 @@ The following table describes the properties.
     </td>
   </tr>
 </table>
+
+## Shortcuts
+
+In order to make it easier to create elements, you can instantiate JSONElements with a set of templates. JSONElements converts your templates to a set of element shortcuts that can be used as template literal tags, in the same fashion as `_e`. In fact, `_e` is implemented the same way you will implement your own shortcuts.
+
+### Initialize JSONElements with shortcuts
+
+First, you need to create an object with your shortcut names as keys and JSONElement templates as values. Let's consider a shortened version of the list of default elements used to initialize `_e`:
+
+```javascript
+const myShortcuts = {
+  "div": { "element": "div" },
+  "h1": { "element": "h1" },
+  "br": { "element": "br", "void": true },
+  "p": { "element": "p" }
+}
+```
+
+The keys that you specify correspond to the template literal tags that you'll use as shortcuts. The templates in this example are very simple, but there are no limitations on the complexity of the templates you can use.
+
+After you have collected your templates in an object, instantiate JSONElements with your shortcuts:
+
+```javascript
+const myElements = new JSONElements(myShortcuts);
+```
+
+In these examples, `myShortcuts` and `myElements` are just variable names. You can use any variable names you like. `myElements` represents what you will use to create elements. The keys in `myShortcuts` represent the individual shortcuts you call with `myElements`. For example, `myElements.div` is a shortcut that you can use to create a `div` element.
+
+Note that in `myShortcuts`, the `void` property is set to `true` for the `br` element. The `void` property is a special property that tells JSONElements to create a self-closing element. Functionally, this determines whether you need to use the shortcut as a template literal tag. For example, the `div` shortcut must be accompanied with backticks, while you use the `br` shortcut by itself:
+
+```javascript
+const myElement = myElements.div`This is a paragraph.${myElements.br}`;
+```
+
+### Use shortcuts to create elements
+
+Once you have instantiated JSONElements with your shortcuts, you can use them to create elements. For example, you can use the `div` shortcut to create a `div` element:
+
+```javascript
+const myElement = myElements.div`This is the content of a div.`;
+```
+
+You can also nest your shortcuts to create nested elements:
+
+```javascript
+const myElement = myElements.div`This is the content of a div.${myElements.p`This is a paragraph.`}`;
+```
+
+For readability, I recommend the following format if you like to pretty-print your code:
+
+```javascript
+const myElement =
+  myElements.div
+    `This is the content of a div.
+      ${myElements.p
+        `This is a paragraph.`
+    }`;
+```
