@@ -585,3 +585,54 @@ const myElement =
         `This is a paragraph.`
     }`;
 ```
+
+### Shortcuts builders: images and links
+
+JSONElements comes with a set of methods that you can use to create shortcuts for images and links:
+
+- `JSONElements.images(images)`
+- `JSONElements.links(links)`
+
+#### `JSONElements.images(images)`
+
+The `JSONElements.images(images)` method creates shortcuts for images. The `images` parameter is an object with image names as keys and image URLs as values. For example:
+
+```javascript
+const myImages = {
+  "example": "https://www.example.com/example.png"
+}
+```
+
+The `JSONElements.images(images)` method returns an object with image names as keys and shortcuts as values. For example:
+
+```javascript
+const myImageShortcuts = JSONElements.images(myImages);
+```
+
+Then, you can reference your image shortcuts in the same way that you reference your other shortcuts. For example, if you want to include your image in a div:
+
+```javascript
+const myElement = myElements.div`My image: ${myImageShortcuts.example}`;
+```
+
+#### `JSONElements.links(links)`
+
+The `JSONElements.links(links)` method creates shortcuts for links. The `links` parameter is an object with link names as keys and link URLs as values. For example:
+
+```javascript
+const myLinks = {
+  "example": "https://www.example.com"
+}
+```
+
+The `JSONElements.links(links)` method returns an object with link names as keys and shortcuts as values. For example:
+
+```javascript
+const myLinkShortcuts = JSONElements.links(myLinks);
+```
+
+Then, you can reference your link shortcuts in the same way that you reference your other shortcuts. For example, if you want to include your link in a div:
+
+```javascript
+const myElement = myElements.div`My link: ${myLinkShortcuts.example`Link text`}`;
+```
