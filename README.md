@@ -152,117 +152,122 @@ _e
 
 `_e` is initialized with a set of default element shortcuts. The list is not exhaustive, but it does include the most common HTML elements:
 
-- `a`
-- `abbr`
-- `address`
-- `area`
-- `article`
-- `aside`
-- `audio`
-- `b`
-- `base`
-- `bdi`
-- `bdo`
-- `blockquote`
-- `body`
-- `br`
-- `button`
-- `canvas`
-- `caption`
-- `cite`
-- `code`
-- `col`
-- `colgroup`
-- `data`
-- `datalist`
-- `dd`
-- `del`
-- `details`
-- `dfn`
-- `dialog`
-- `div`
-- `dl`
-- `dt`
-- `em`
-- `embed`
-- `fieldset`
-- `figcaption`
-- `figure`
-- `footer`
-- `form`
-- `h1`
-- `h2`
-- `h3`
-- `h4`
-- `h5`
-- `h6`
-- `head`
-- `header`
-- `hr`
-- `html`
-- `i`
-- `iframe`
-- `img`
-- `input`
-- `ins`
-- `kbd`
-- `label`
-- `legend`
-- `li`
-- `link`
-- `main`
-- `map`
-- `mark`
-- `meta`
-- `meter`
-- `nav`
-- `noscript`
-- `object`
-- `ol`
-- `optgroup`
-- `option`
-- `output`
-- `p`
-- `param`
-- `picture`
-- `pre`
-- `progress`
-- `q`
-- `rp`
-- `rt`
-- `ruby`
-- `s`
-- `samp`
-- `script`
-- `section`
-- `select`
-- `small`
-- `source`
-- `span`
-- `strong`
-- `style`
-- `sub`
-- `summary`
-- `sup`
-- `table`
-- `tbody`
-- `td`
-- `template`
-- `textarea`
-- `tfoot`
-- `th`
-- `thead`
-- `time`
-- `title`
-- `tr`
-- `track`
-- `u`
-- `ul`
-- `var`
-- `video`
-- `wbr`
+<details>
+  <summary>Expand list of supported elements</summary>
+  
+  - `a`
+  - `abbr`
+  - `address`
+  - `area`
+  - `article`
+  - `aside`
+  - `audio`
+  - `b`
+  - `base`
+  - `bdi`
+  - `bdo`
+  - `blockquote`
+  - `body`
+  - `br`
+  - `button`
+  - `canvas`
+  - `caption`
+  - `cite`
+  - `code`
+  - `col`
+  - `colgroup`
+  - `data`
+  - `datalist`
+  - `dd`
+  - `del`
+  - `details`
+  - `dfn`
+  - `dialog`
+  - `div`
+  - `dl`
+  - `dt`
+  - `em`
+  - `embed`
+  - `fieldset`
+  - `figcaption`
+  - `figure`
+  - `footer`
+  - `form`
+  - `h1`
+  - `h2`
+  - `h3`
+  - `h4`
+  - `h5`
+  - `h6`
+  - `head`
+  - `header`
+  - `hr`
+  - `html`
+  - `i`
+  - `iframe`
+  - `img`
+  - `input`
+  - `ins`
+  - `kbd`
+  - `label`
+  - `legend`
+  - `li`
+  - `link`
+  - `main`
+  - `map`
+  - `mark`
+  - `meta`
+  - `meter`
+  - `nav`
+  - `noscript`
+  - `object`
+  - `ol`
+  - `optgroup`
+  - `option`
+  - `output`
+  - `p`
+  - `param`
+  - `picture`
+  - `pre`
+  - `progress`
+  - `q`
+  - `rp`
+  - `rt`
+  - `ruby`
+  - `s`
+  - `samp`
+  - `script`
+  - `section`
+  - `select`
+  - `small`
+  - `source`
+  - `span`
+  - `strong`
+  - `style`
+  - `sub`
+  - `summary`
+  - `sup`
+  - `table`
+  - `tbody`
+  - `td`
+  - `template`
+  - `textarea`
+  - `tfoot`
+  - `th`
+  - `thead`
+  - `time`
+  - `title`
+  - `tr`
+  - `track`
+  - `u`
+  - `ul`
+  - `var`
+  - `video`
+  - `wbr`
+</details>
+<br>
 
-For example, if we wanted to nest the `Hello, world!` paragraph inside another element:
+For example, if we want to nest the `Hello, world!` paragraph inside another element only using `_e`:
 
 ```js
 _e
@@ -273,6 +278,20 @@ _e
   ${_e.p
     `Hello, world!`
   }`;
+```
+
+The following example mixes `_e` with the `JSONElements.create()` method, and uses the `JSONElement` class:
+
+```js
+  const element = new JSONElement({
+    "element": document.body,
+    "childNodes": [
+      _e.h1
+        `Hello, world!`,
+      _e.p
+        `This is a paragraph.`
+    ]
+  });
 ```
 
 ## JSONElement schema
