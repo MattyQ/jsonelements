@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JSONElements</title>
+  <meta name="description" content="A lightweight JavaScript library to render websites with JSON.">
+
+  <meta property="og:title" content="JSONElements">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.jsonelements.com/">
+  <meta property="og:description" content="A lightweight JavaScript library to render websites with JSON.">
+
+  <script src="./jsonelements.min.js"></script>
+  <script>
+    JSONElements.create({
+      "element": document.body,
+      "childArray": [
+        {
+          "element": "h1",
+          "text": "Hello World!"
+        },
+        {
+          "element": "p",
+          "text": "This is a paragraph."
+        }
+      ]
+    })
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
