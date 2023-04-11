@@ -17,6 +17,9 @@ Basic content for an HTML document can be initialized with the following code:
 
   <head>
     <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
+  </head>
+
+  <body>
     <script>
       JSONElements.create({
         "element": "p",
@@ -24,9 +27,6 @@ Basic content for an HTML document can be initialized with the following code:
         "parentSelector": "body"
       });
     </script>
-  </head>
-
-  <body>
   </body>
 
 </html>
