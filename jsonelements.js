@@ -200,6 +200,18 @@ class JSONElements {
     return elementsArray;
   }
 
+  static #loadElement(template) {
+    window.addEventListener("DOMContentLoaded", function () {
+      JSONElements.loadedElements.push(new JSONElement(template));
+    }, true);
+  }
+
+  static #loadElements(templates) {
+    window.addEventListener("DOMContentLoaded", function () {
+      JSONElements.loadedElements.push(...JSONElements.createMany(templates));
+    }, true);
+  }
+
   static #mergeTemplates(originalTemplate, modifiedTemplate) {
     var updatedTemplate = {};
 
@@ -1269,6 +1281,16 @@ class JSONElements {
   static links(links) {
     return new JSONElements.#Links(links);
   }
+
+  static load(template) {
+    return this.#loadElement(template);
+  }
+
+  static loadMany(templateArray, nodeMap = undefined) {
+    return this.#loadElements(templateArray, nodeMap);
+  }
+
+  static loadedElements = [];
 
   static merge(template1, template2) {
     return this.#mergeTemplates(template1, template2);
