@@ -1286,8 +1286,8 @@ class JSONElements {
     return this.#loadElement(template);
   }
 
-  static loadMany(templateArray) {
-    return this.#loadElements(templateArray);
+  static loadMany(templateArray, nodeMap = undefined) {
+    return this.#loadElements(templateArray, nodeMap);
   }
 
   static loadedElements = [];
