@@ -16,7 +16,7 @@ Basic content for an HTML document can be initialized with the following code:
 <html>
 
   <head>
-    <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.1-pre-release/jsonelements.js"></script>
     <script>
       JSONElements.load({
         "element": "p",
@@ -43,13 +43,13 @@ To load the JSONElements library, I recommend you use the jsDelivr CDN.
 For the normal, unminified version:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.1-pre-release/jsonelements.js"></script>
 ```
 
 For the minified version:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.1-pre-release/jsonelements.min.js"></script>
 ```
 
 The script link can be placed in the head or body of your HTML document.
@@ -59,7 +59,7 @@ Example:
 ```
 <head>
   ...
-  <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.1-pre-release/jsonelements.min.js"></script>
 </head>
 ```
 
