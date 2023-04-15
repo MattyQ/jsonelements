@@ -118,6 +118,15 @@ The `JSONElements.getJSONTemplate(element)` method takes an element and returns 
 
 The `JSONElements.isJSONElement(element)` method takes an element and returns a boolean value. The value is `true` if the element has the ElementJS key.
 
+#### JSONElements.load(template)
+
+The `JSONElements.load(template)` method takes a JSON template as a parameter and creates the element only after the DOM is loaded. Loaded elements are added to the array in the `JSONElements.loadedElements` property. This method is useful if you want to execute your JSONElements code in the `head` of your HTML document but still interact with the complete DOM. You can use this method multiple times.
+
+
+#### JSONElements.loadMany(templatesArray, nodeMap)
+
+
+
 #### JSONElements.merge(template1, template2)
 
 The `JSONElements.merge(template1, template2)` method takes two JSON templates as parameters and returns a new JSON template that is the result of merging the two templates. The changes in `template2` override the changes in `template1`.
