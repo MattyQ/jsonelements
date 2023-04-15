@@ -17,16 +17,16 @@ Basic content for an HTML document can be initialized with the following code:
 
   <head>
     <script src="https://cdn.jsdelivr.net/gh/mattyq/jsonelements@v0.2.0-pre-release/jsonelements.js"></script>
-  </head>
-
-  <body>
     <script>
-      JSONElements.create({
+      JSONElements.load({
         "element": "p",
         "textContent": "Hello, world!",
         "parentSelector": "body"
       });
     </script>
+  </head>
+
+  <body>
   </body>
 
 </html>
@@ -90,6 +90,8 @@ The `JSONElements` class has the following methods:
 - `images(images)` (see the Shortcuts section)
 - `isJSONElement(element)`
 - `links(links)` (see the Shortcuts section)
+- `load(template)`
+- `loadMany(templatesArray, nodeMap)`
 - `merge(template1, template2)`
 - `parse()`
 - `text(string)`
@@ -125,7 +127,7 @@ The `JSONElements.load(template)` method takes a JSON template as a parameter an
 
 #### JSONElements.loadMany(templatesArray, nodeMap)
 
-
+The `JSONElements.loadMany(templatesArray, nodeMap)` method is equivalent to the `JSONElements.createMany()` method except that the elements are created after the DOM is loaded. The elements are added to the array in the `JSONElements.loadedElements` property.
 
 #### JSONElements.merge(template1, template2)
 
